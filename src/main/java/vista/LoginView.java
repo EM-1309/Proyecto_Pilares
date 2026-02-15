@@ -6,7 +6,7 @@ package vista;
 
 /**
  *
- * @author Mario
+ * @author daniel
  */
 public class LoginView extends javax.swing.JFrame {
     
