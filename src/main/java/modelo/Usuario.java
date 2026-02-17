@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author Emmanuel
