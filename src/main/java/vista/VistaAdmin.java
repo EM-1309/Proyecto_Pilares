@@ -38,7 +38,6 @@ public class VistaAdmin extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         btnAveria = new javax.swing.JMenuItem();
         btnUsuario = new javax.swing.JMenuItem();
-        btnRoles = new javax.swing.JMenuItem();
         btnMaquina = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
@@ -72,9 +71,6 @@ public class VistaAdmin extends javax.swing.JFrame {
             }
         });
         jMenu2.add(btnUsuario);
-
-        btnRoles.setText("Roles");
-        jMenu2.add(btnRoles);
 
         btnMaquina.setText("Máquinas");
         jMenu2.add(btnMaquina);
@@ -135,7 +131,6 @@ public class VistaAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAveria;
     private javax.swing.JMenuItem btnMaquina;
-    private javax.swing.JMenuItem btnRoles;
     private javax.swing.JMenuItem btnUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

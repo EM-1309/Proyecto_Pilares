@@ -53,11 +53,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuarioActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="btnRoles">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Roles"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="btnMaquina">
               <Properties>
                 <Property name="text" type="java.lang.String" value="M&#xe1;quinas"/>
