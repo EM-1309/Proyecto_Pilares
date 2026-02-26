@@ -100,7 +100,23 @@ public class VistaAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        // TODO add your handling code here:
+        // 1. Crear la vista
+    UsuariosView viewUsuarios = new UsuariosView();
+    
+    // 2. Crear el DAO (ya lo tienes hecho)
+    dao.UsuarioDAO daoUsuario = new dao.impl.UsuarioDAOImpl();
+    
+    // 3. Aquí deberíamos conectar un CONTROLADOR. 
+    // Como paso rápido (si no vas a crear la clase UsuariosController aparte), 
+    // puedes cargar la lista directamente aquí:
+    
+    viewUsuarios.llenarTabla(daoUsuario.listar());
+    
+    // HACER VISIBLE LA VENTANA
+    viewUsuarios.setVisible(true);
+    
+    // (Opcional) Si quieres que la ventana sea "modal" (que no deje tocar la de atrás),
+    // deberías haber creado UsuariosView como JDialog en vez de JFrame.
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     /**
