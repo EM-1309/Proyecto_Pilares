@@ -116,6 +116,18 @@ public class LoginView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new LoginView().setVisible(true));
     }
 
+    public javax.swing.JButton getBtnEntrar() {
+        return btnEntrar;
+    }
+
+    // También añade estos para que el controlador lea los datos
+    public javax.swing.JTextField getTxtEmail() {
+        return txtEmail;
+    }
+
+    public javax.swing.JPasswordField getPasswdContraseña() {
+        return passwdContraseña;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
