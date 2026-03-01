@@ -53,5 +53,32 @@ public class UsuarioControlador {
     }
     
     private void eliminar(){
+        // Obtener el ID desde la vista (ej. de una fila seleccionada en la tabla)
+        int idSeleccionado = uV.getIdSeleccionado(); 
+
+        if (idSeleccionado == -1) {
+            uV.mostrarError("Debe seleccionar un usuario de la tabla.");
+            return;
+        }
+
+        // Pedir confirmación al administrador
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            uV, 
+            "¿Está seguro de que desea dar de baja a este usuario?\nEl registro permanecerá en el histórico pero no podrá acceder al sistema.", 
+            "Confirmar Baja Lógica", 
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            try {
+                // 3. Llamamos al DAO (que hará el UPDATE a activo=false)
+                uD.eliminar(idSeleccionado);
+                uV.mostrarMensaje("Usuario desactivado correctamente.");
+
+            } catch (Exception ex) {
+                uV.mostrarError("Error al desactivar: " + ex.getMessage());
+            }
+        }
     }
 }
+
