@@ -229,14 +229,13 @@ public class AveriasView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new AveriasView().setVisible(true));
     }
     
+    // Getters
     public String getDescInic() { return txtDescInic.getText().trim(); }
     public String getProcRealizado() { return txtProcRealizado.getText().trim(); }
-    
-    public String getMaquinariaID() { return txtMaquinariaID.getText().trim(); }
-    public String getTipoAveriaID() { return txtTipoAveriaID.getText().trim(); }
-    public String getOperarioID() { return txtOperarioID.getText().trim(); }
-    public String getTecnicoID() { return txtTecnicoID.getText().trim(); }
-
+    public int getMaquinariaID() { return Integer.parseInt(txtMaquinariaID.getText().trim()); }
+    public int getTipoAveriaID() { return Integer.parseInt(txtTipoAveriaID.getText().trim()); }
+    public int getOperarioID() { return Integer.parseInt(txtOperarioID.getText().trim()); }
+    public int getTecnicoID() { return Integer.parseInt(txtTecnicoID.getText().trim()); }
     public String getFechaInicio() { return txtFechaInicio.getText().trim(); }
     public String getFechaAsig() { return txtFechaAsig.getText().trim(); }
     public String getFechaAcep() { return txtFechaAcep.getText().trim(); }
@@ -303,6 +302,10 @@ public class AveriasView extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    public void escucharBtnReportar(java.awt.event.ActionListener l) { 
+        btnReportar.addActionListener(l); 
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;

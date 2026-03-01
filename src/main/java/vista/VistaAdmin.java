@@ -143,7 +143,20 @@ public class VistaAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaAdmin().setVisible(true));
     }
-
+    
+    // Métodos puente para los items del menú de Gestión
+    public void esMenuUsuarios(java.awt.event.ActionListener l){
+        btnUsuario.addActionListener(l);
+    }
+    
+    public void esMenuAverias(java.awt.event.ActionListener l){
+        btnAveria.addActionListener(l);
+    }
+    
+    public void esMenuMaquinas(java.awt.event.ActionListener l){
+        btnMaquina.addActionListener(l);
+    } 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAveria;
     private javax.swing.JMenuItem btnMaquina;
