@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import dao.AveriaDAO;
 import dao.UsuarioDAO;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -16,17 +17,22 @@ import vista.VistaAdmin;
  * @author emmnavmoj
  */
 public class LoginControlador {
+    // Llamamos a las clases
     private LoginView vistal;
     private UsuarioDAO uDao;
+    private AveriaDAO aDao;
     
-    public LoginControlador(LoginView vistal, UsuarioDAO uDao){
+    // Constructor
+    public LoginControlador(LoginView vistal, UsuarioDAO uDao, AveriaDAO aDao){
         this.vistal = vistal;
         this.uDao = uDao;
+        this.aDao = aDao;
         
         // Escuchamos el botón
         this.vistal.getBtnEntrar().addActionListener(e -> validarAcceso()); 
     }
     
+    // Método para validar el acceso del usuario
     private void validarAcceso(){
         // Capturamos datos de los campos del login
         String email = vistal.getTxtEmail().getText();
@@ -46,9 +52,14 @@ public class LoginControlador {
             
             // Verificamos que el usuario este activo
             if(u.isActivo()){
-                // Si lo esta, cerramos login y abrimos VistaAdmin
+                // Si lo esta, cerramos login
                 vistal.dispose();
                 VistaAdmin admin = new VistaAdmin();
+                
+                // Conectamos el administrador con sus funciones
+                new AdminControlador(admin, this.uDao, this.aDao);
+                
+                // Abrimos la vistaAdmin
                 admin.setVisible(true);
             }else{
                 // Si no esta activo avisamos al usuario

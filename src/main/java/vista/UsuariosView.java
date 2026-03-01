@@ -324,6 +324,15 @@ public class UsuariosView extends javax.swing.JFrame {
     public void mostrarError(String msg) {
         javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    
+    // Métodos puente para botones
+    public void escucharBtnAgregar(java.awt.event.ActionListener l) { 
+        btnAgregar.addActionListener(l); 
+    }
+    
+    public void escucharBtnEliminar(java.awt.event.ActionListener l) { 
+        btnEliminar.addActionListener(l); 
+    }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
