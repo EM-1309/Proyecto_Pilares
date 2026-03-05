@@ -8,14 +8,14 @@ package vista;
  *
  * @author danmanfer2
  */
-public class AveriasView extends javax.swing.JFrame {
+public class ActualizarAveriasView extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AveriasView.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ActualizarAveriasView.class.getName());
 
     /**
      * Creates new form AveriasView
      */
-    public AveriasView() {
+    public ActualizarAveriasView() {
         initComponents();
     }
 
@@ -37,7 +37,7 @@ public class AveriasView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtTipoAveriaID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtOperarioID = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtTecnicoID = new javax.swing.JTextField();
         txtFechaInicio = new javax.swing.JTextField();
@@ -50,10 +50,7 @@ public class AveriasView extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnReportar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,7 +62,7 @@ public class AveriasView extends javax.swing.JFrame {
 
         jLabel4.setText("ID Tipo Avería:");
 
-        jLabel5.setText("ID Operario:");
+        jLabel5.setText("ID Usuario:");
 
         jLabel6.setText("ID Técnico Asignado:");
 
@@ -90,62 +87,49 @@ public class AveriasView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        btnReportar.setText("Reportar Avería");
-
-        btnLimpiar.setText("Limpiar");
-
         btnActualizar.setText("Actualizar");
-
-        btnEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaAcep, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                        .addComponent(txtDescInic)
-                        .addComponent(txtProcRealizado)
-                        .addComponent(txtMaquinariaID)
-                        .addComponent(txtTipoAveriaID)
-                        .addComponent(txtOperarioID)
-                        .addComponent(txtTecnicoID)
-                        .addComponent(txtFechaAsig, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtFechaFin)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFechaAcep, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(txtDescInic)
+                                .addComponent(txtProcRealizado)
+                                .addComponent(txtMaquinariaID)
+                                .addComponent(txtTipoAveriaID)
+                                .addComponent(txtUsuario)
+                                .addComponent(txtTecnicoID)
+                                .addComponent(txtFechaAsig, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtFechaFin))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(btnReportar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnActualizar)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnEliminar)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnLimpiar)
-                        .addGap(25, 25, 25))))
+                        .addGap(87, 87, 87)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +155,7 @@ public class AveriasView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtOperarioID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -187,23 +171,15 @@ public class AveriasView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txtFechaAcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(txtFechaAcep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReportar)
-                            .addComponent(btnLimpiar)
-                            .addComponent(btnActualizar)
-                            .addComponent(btnEliminar))
-                        .addGap(22, 22, 22))))
+                        .addGap(30, 30, 30)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
 
         pack();
@@ -226,7 +202,7 @@ public class AveriasView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AveriasView().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ActualizarAveriasView().setVisible(true));
     }
     
     public String getDescInic() { return txtDescInic.getText().trim(); }
@@ -234,7 +210,7 @@ public class AveriasView extends javax.swing.JFrame {
     
     public String getMaquinariaID() { return txtMaquinariaID.getText().trim(); }
     public String getTipoAveriaID() { return txtTipoAveriaID.getText().trim(); }
-    public String getOperarioID() { return txtOperarioID.getText().trim(); }
+    public String getOperarioID() { return txtUsuario.getText().trim(); }
     public String getTecnicoID() { return txtTecnicoID.getText().trim(); }
 
     public String getFechaInicio() { return txtFechaInicio.getText().trim(); }
@@ -272,10 +248,8 @@ public class AveriasView extends javax.swing.JFrame {
     // LISTENERS (Añadidos manualmente)
     // =======================================================
     
-    public void setBtnReportarListener(java.awt.event.ActionListener l) { btnReportar.addActionListener(l); }
     public void setBtnActualizarListener(java.awt.event.ActionListener l) { btnActualizar.addActionListener(l); }
-    public void setBtnEliminarListener(java.awt.event.ActionListener l) { btnEliminar.addActionListener(l); }
-    public void setBtnLimpiarListener(java.awt.event.ActionListener l) { btnLimpiar.addActionListener(l); }
+
 
     // =======================================================
     // UTILIDADES (Añadidas manualmente)
@@ -286,7 +260,7 @@ public class AveriasView extends javax.swing.JFrame {
         txtProcRealizado.setText("");
         txtMaquinariaID.setText("");
         txtTipoAveriaID.setText("");
-        txtOperarioID.setText("");
+        txtUsuario.setText("");
         txtTecnicoID.setText("");
         txtFechaInicio.setText("");
         txtFechaAsig.setText("");
@@ -305,9 +279,6 @@ public class AveriasView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnReportar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -326,9 +297,9 @@ public class AveriasView extends javax.swing.JFrame {
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
     private javax.swing.JTextField txtMaquinariaID;
-    private javax.swing.JTextField txtOperarioID;
     private javax.swing.JTextField txtProcRealizado;
     private javax.swing.JTextField txtTecnicoID;
     private javax.swing.JTextField txtTipoAveriaID;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
