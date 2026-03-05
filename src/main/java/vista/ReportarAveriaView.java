@@ -17,6 +17,7 @@ public class ReportarAveriaView extends javax.swing.JFrame {
      */
     public ReportarAveriaView() {
         initComponents();
+        setTitle("Reportar Avería");
     }
 
     /**
