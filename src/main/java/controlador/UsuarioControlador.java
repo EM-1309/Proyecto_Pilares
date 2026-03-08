@@ -19,6 +19,8 @@ public class UsuarioControlador {
     // Llamamos a las clases
     private UsuariosView uV;
     private UsuarioDAO uD;
+    private AveriaDAO averiaD;
+    private MaquinariaDAO maquinariaD;
     
     // Constructor y enlazamos los botones con sus acciones
     public UsuarioControlador(UsuariosView uV, UsuarioDAO uD){
@@ -30,8 +32,10 @@ public class UsuarioControlador {
         // Enlazamos los botones con sus acciones
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
+        this.uV.setBtnVolverListener(e -> volverAdmin());
     }
     
+    // Método para cargar la tabla
     private void cargarTabla(){
         uV.llenarTabla(uD.listarActivos());
     }
@@ -65,6 +69,7 @@ public class UsuarioControlador {
         }
     }
     
+    // Método para dar de baja a un usuario
     private void eliminar(){
         // Obtener el ID desde la vista (ej. de una fila seleccionada en la tabla)
         int idSeleccionado = uV.getIdSeleccionado(); 
@@ -93,6 +98,16 @@ public class UsuarioControlador {
                 uV.mostrarError("Error al desactivar: " + ex.getMessage());
             }
         }
+    }
+    
+    private void volverAdmin(){
+       VistaAdmin admin = new VistaAdmin();
+
+       new AdminControlador(admin, uD, averiaD, maquinariaD);
+
+       admin.setVisible(true);
+
+       uV.dispose();
     }
 }
 

@@ -4,8 +4,11 @@
  */
 package controlador;
 
+import dao.AveriaDAO;
 import dao.MaquinariaDAO;
+import dao.UsuarioDAO;
 import modelo.Maquinaria;
+import vista.VistaAdmin;
 import vista.VistaMaquinas;
 
 /**
@@ -13,9 +16,12 @@ import vista.VistaMaquinas;
  * @author Mario
  */
 public class MaquinaControlador {
-   private VistaMaquinas vistaM;
+    private VistaMaquinas vistaM;
     private MaquinariaDAO maquinariaD;
+    private UsuarioDAO usuarioD;
+    private AveriaDAO averiaD;
 
+   // Constructor
     public MaquinaControlador(VistaMaquinas vistaM, MaquinariaDAO maquinariaD) {
         this.vistaM = vistaM;
         this.maquinariaD = maquinariaD;
@@ -23,14 +29,27 @@ public class MaquinaControlador {
         cargarTabla();
 
         this.vistaM.setBtnEliminarListener(e -> eliminar());
+        this.vistaM.setBtnVolverListener(e -> volverAdmin());
 
     }
 
+    // Método para cargar la tabla
     private void cargarTabla() {
         vistaM.llenarTabla(maquinariaD.listar());
     }
 
+    // Método para volver al menu "Principal"
+    private void volverAdmin() {
+        VistaAdmin admin = new VistaAdmin();
 
+        new AdminControlador(admin, usuarioD, averiaD, maquinariaD);
+
+        admin.setVisible(true);
+
+        vistaM.dispose();
+    }
+
+    // Método para eliminar maquinas
     private void eliminar() {
         int idSeleccionado = vistaM.getIdSeleccionado();
 
