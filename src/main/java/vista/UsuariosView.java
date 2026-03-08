@@ -17,6 +17,8 @@ public class UsuariosView extends javax.swing.JFrame {
      */
     public UsuariosView() {
         initComponents();
+        setTitle("Gestión de Usuarios");
+        personalizarVista();
     }
 
     /**
@@ -119,20 +121,19 @@ public class UsuariosView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(chkActivo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnActualizar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLimpiar)
-                        .addGap(16, 16, 16))))
+                        .addGap(28, 28, 28)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,7 +333,33 @@ public class UsuariosView extends javax.swing.JFrame {
     
     public void escucharBtnEliminar(java.awt.event.ActionListener l) { 
         btnEliminar.addActionListener(l); 
-    }   
+    }
+    
+    // Método para personalizar la vista
+    private void personalizarVista(){
+        Util.EstiloUI.aplicarVentana(this);
+        
+        Util.EstiloUI.aplicarTexto(jLabel1);
+        Util.EstiloUI.aplicarTexto(jLabel2);
+        Util.EstiloUI.aplicarTexto(jLabel3);
+        Util.EstiloUI.aplicarTexto(jLabel4);
+        Util.EstiloUI.aplicarTexto(jLabel5);
+        Util.EstiloUI.aplicarTexto(jLabel6);
+        
+        Util.EstiloUI.aplicarCampo(txtNombre);
+        Util.EstiloUI.aplicarCampo(txtApellido);
+        Util.EstiloUI.aplicarCampo(txtTelefono);
+        Util.EstiloUI.aplicarCampo(txtEmail);
+        Util.EstiloUI.aplicarCampo(txtPassword);
+        Util.EstiloUI.aplicarCampo(txtRolID);
+        
+        Util.EstiloUI.aplicarBotonExito(btnAgregar);
+        Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
+        Util.EstiloUI.aplicarBotonSecundario(btnLimpiar);
+        Util.EstiloUI.aplicarBotonSecundario(btnActualizar);
+        
+        Util.EstiloUI.aplicarTabla(tblUsuarios);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

@@ -17,6 +17,8 @@ public class VistaMaquinas extends javax.swing.JFrame {
      */
     public VistaMaquinas() {
         initComponents();
+        setTitle("Gestión de Máquinas");
+        personalizarVista();
     }
 
     /**
@@ -99,7 +101,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
                         .addComponent(btnMaquinaria)
                         .addGap(18, 18, 18)
                         .addComponent(btnEstados)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,6 +130,68 @@ public class VistaMaquinas extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaMaquinas().setVisible(true));
+    }
+    
+    public void setBtnAgregarListener(java.awt.event.ActionListener listener) {
+        btnAgregar.addActionListener(listener);
+    }
+
+    public void setBtnEditarListener(java.awt.event.ActionListener listener) {
+        btnEditar.addActionListener(listener);
+    }
+
+    public void setBtnEliminarListener(java.awt.event.ActionListener listener) {
+        btnEliminar.addActionListener(listener);
+    }
+    
+    // Método para obtener columna seleccionada
+    public int getIdSeleccionado() {
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) return -1;
+
+        Object valor = jTable1.getValueAt(fila, 0);
+        return Integer.parseInt(valor.toString());
+    }
+    
+    // Método para mostrar mensaje éxitoso
+    public void mostrarMensaje(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para mostrar un mensaje error
+    public void mostrarError(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // Método para llenar la tabla
+    public void llenarTabla(java.util.List<modelo.Maquinaria> lista) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (modelo.Maquinaria m : lista) {
+            modelo.addRow(new Object[]{
+                m.getCodigoMaquinaria(),
+                m.getNombre(),
+                m.getCodigoEstadoFK(),
+                m.getFechaAlta(),
+                m.getFechaBaja(),
+                m.getTipoMaquinariaFK()
+            });
+        }
+    }
+    
+    // Método para personalizar la clase
+    private void personalizarVista(){
+        Util.EstiloUI.aplicarVentana(this);
+        
+        Util.EstiloUI.aplicarBotonPrimario(btnEditar);
+        Util.EstiloUI.aplicarBotonPrimario(btnAgregar);
+        Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
+        Util.EstiloUI.aplicarBotonPrimario(btnMaquinaria);
+        Util.EstiloUI.aplicarBotonPrimario(btnEstados);
+        Util.EstiloUI.aplicarBotonPrimario(btnRefrescarLista);
+        
+        Util.EstiloUI.aplicarTabla(jTable1);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

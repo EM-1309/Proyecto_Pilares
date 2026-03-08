@@ -60,6 +60,10 @@ public class LoginControlador {
                 
                 if(u.getCodigoRolFK() == 1){
                     VistaAdmin admin = new VistaAdmin();
+                    admin.mostrarUsuario(u.getNombre());
+                    
+                    new AdminControlador(admin, uDao, aDao, mDao);
+                    
                     admin.setVisible(true);
                 }else if (u.getCodigoRolFK() == 2){
                     // VistaOperario ope = new VistaOperario;
