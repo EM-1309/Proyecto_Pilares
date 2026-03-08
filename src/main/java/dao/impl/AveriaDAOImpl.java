@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import modelo.Averia;
+import modelo.AveriaDetalle;
+import modelo.TipoAveria;
 
 /**
  * CLASE: AveriaDAOImpl
@@ -27,13 +29,20 @@ public class AveriaDAOImpl implements AveriaDAO {
     // --- CONSTANTES SQL ---
     
     private static final String SQL_INSERT = "INSERT INTO averia (descInicAveria, fechaInicioAver, fechaAsigTecnico, fechaAcepTecnico, fechaFinalizTecnico, procRealizadoTecnico, usuarioReportaFK, usuarioTecnicoFK, maquinariaFK, tipoAveriaFK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
     private static final String SQL_UPDATE = "UPDATE averia SET descInicAveria=?, fechaInicioAver=?, fechaAsigTecnico=?, fechaAcepTecnico=?, fechaFinalizTecnico=?, procRealizadoTecnico=?, usuarioReportaFK=?, usuarioTecnicoFK=?, maquinariaFK=?, tipoAveriaFK=? WHERE codigoAveria=?";
-    
     private static final String SQL_DELETE = "DELETE FROM averia WHERE codigoAveria=?";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM averia WHERE codigoAveria=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM averia";
-
+    private static final String SQL_SELECT_DETALLE = "SELECT a.*, " + "m.nombre AS nombreMaquinaria, " + "ta.descripcionTipoAv AS descripcionTipoAveria, " + "CONCAT(ur.nombre, ' ', ur.apellido) AS nombreOperario, " + "CONCAT(ut.nombre, ' ', ut.apellido) AS nombreTecnico " + "FROM averia a " + "JOIN maquinaria m ON a.maquinariaFK = m.codigoMaquinaria " +
+    "JOIN tipo_averia ta ON a.tipoAveriaFK = ta.codigoTipoAveria " + "JOIN usuario ur ON a.usuarioReportaFK = ur.codigoUsuario " + "LEFT JOIN usuario ut ON a.usuarioTecnicoFK = ut.codigoUsuario"; // SQL mostrar las averías con más detalle
+    private static final String SQL_ASIGNAR_TECNICO = "UPDATE averia SET usuarioTecnicoFK=?, fechaAsigTecnico=NOW() WHERE codigoAveria=?"; // SQL para asignar una averia a un mécanico
+    private static final String SQL_LISTAR_TIPOS = "SELECT * FROM tipo_averia";
+    
+    
+    /**
+     * Método para crear una nueva averia
+     * @param a 
+     */
     @Override
     public void insertar(Averia a) {
         try (Connection con = Conexion.getConexion();
@@ -94,6 +103,10 @@ public class AveriaDAOImpl implements AveriaDAO {
         }
     }
 
+    /**
+     * Método para modificar una avería
+     * @param a 
+     */
     @Override
     public void actualizar(Averia a) {
         try (Connection con = Conexion.getConexion();
@@ -132,6 +145,10 @@ public class AveriaDAOImpl implements AveriaDAO {
         }
     }
 
+    /**
+     * Método para eliminar una avería
+     * @param id 
+     */
     @Override
     public void eliminar(int id) {
         try (Connection con = Conexion.getConexion();
@@ -210,5 +227,91 @@ public class AveriaDAOImpl implements AveriaDAO {
         a.setTipoAveriaFK(rs.getInt("tipoAveriaFK"));
         
         return a;
+    }
+    
+    private AveriaDetalle mapResultSetToAveriaDetalle(ResultSet rs) throws SQLException {
+        AveriaDetalle a = new AveriaDetalle();
+
+        a.setCodigoAveria(rs.getInt("codigoAveria"));
+        a.setDescInicAveria(rs.getString("descInicAveria"));
+        a.setFechaInicioAver(rs.getTimestamp("fechaInicioAver"));
+        a.setFechaAsigTecnico(rs.getTimestamp("fechaAsigTecnico"));
+        a.setFechaAcepTecnico(rs.getTimestamp("fechaAcepTecnico"));
+        a.setFechaFinalizTecnico(rs.getTimestamp("fechaFinalizTecnico"));
+        a.setProcRealizadoTecnico(rs.getString("procRealizadoTecnico"));
+        a.setUsuarioReportaFK(rs.getInt("usuarioReportaFK"));
+
+        int tecnico = rs.getInt("usuarioTecnicoFK");
+        if (rs.wasNull()) {
+            a.setUsuarioTecnicoFK(null);
+        } else {
+            a.setUsuarioTecnicoFK(tecnico);
+        }
+
+        a.setMaquinariaFK(rs.getInt("maquinariaFK"));
+        a.setTipoAveriaFK(rs.getInt("tipoAveriaFK"));
+
+        a.setNombreMaquinaria(rs.getString("nombreMaquinaria"));
+        a.setDescripcionTipoAveria(rs.getString("descripcionTipoAveria"));
+        a.setNombreOperario(rs.getString("nombreOperario"));
+        a.setNombreTecnico(rs.getString("nombreTecnico"));
+
+        return a;
+    }
+
+    @Override
+    public List<AveriaDetalle> listarConDetalle() {
+        List<AveriaDetalle> lista = new ArrayList<>();
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(SQL_SELECT_DETALLE);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapResultSetToAveriaDetalle(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error listando averías con detalle: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
+    @Override
+    public void asignarTecnico(int codigoAveria, int codigoTecnico) {
+        try (Connection con = Conexion.getConexion();
+         PreparedStatement ps = con.prepareStatement(SQL_ASIGNAR_TECNICO)) {
+
+        ps.setInt(1, codigoTecnico);
+        ps.setInt(2, codigoAveria);
+        ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Error al asignar técnico: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<TipoAveria> listarTiposAveria() {
+        List<TipoAveria> lista = new ArrayList<>();
+
+    try (Connection con = Conexion.getConexion();
+         PreparedStatement ps = con.prepareStatement(SQL_LISTAR_TIPOS);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            TipoAveria t = new TipoAveria();
+            t.setCodigoTipoAveria(rs.getInt("codigoTipoAveria"));
+            t.setDescripcionTipoAv(rs.getString("descripcionTipoAv"));
+            t.setTiempoPromRepar(rs.getInt("tiempoPromRepar"));
+            lista.add(t);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error listando tipos de avería: " + e.getMessage());
+    }
+
+    return lista;
     }
 }
