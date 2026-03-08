@@ -28,6 +28,13 @@ public interface UsuarioDAO {
     // Lista todos los usuarios registrados en el sistema
     List<Usuario> listar();
     
+    // Listar todos los usuarios activos
+    List<Usuario> listarActivos();
+    
+    // Listar usuario segun su tipo (ej: mecanico o operario)
+    List<Usuario> listarOperarios();
+    List<Usuario> listarMecanicos();
+    
     // Verifica las credenciales de accceso, que luego puede ser esencial
     Optional<Usuario> login(String email, String password);
 }

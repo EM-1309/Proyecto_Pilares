@@ -59,4 +59,10 @@ public class Maquinaria {
     public void setTipoMaquinariaFK(int tipoMaquinariaFK) {
         this.tipoMaquinariaFK = tipoMaquinariaFK;
     }
+    
+    // toString
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

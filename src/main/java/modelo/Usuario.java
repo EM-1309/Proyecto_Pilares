@@ -87,4 +87,10 @@ public class Usuario {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+    
+    // toString
+    @Override
+    public String toString(){
+        return nombre + " " + apellido;
+    }
 }
