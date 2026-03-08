@@ -27,4 +27,7 @@ public interface MaquinariaDAO {
     
     // Devuelve la lista completa de máquinas
     List<Maquinaria> listar();
+    
+    // Listar por máquinas activas
+    List<Maquinaria> listarActivas();
 }

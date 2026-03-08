@@ -19,15 +19,25 @@ public class UsuarioControlador {
     // Llamamos a las clases
     private UsuariosView uV;
     private UsuarioDAO uD;
+    private AveriaDAO averiaD;
+    private MaquinariaDAO maquinariaD;
     
     // Constructor y enlazamos los botones con sus acciones
     public UsuarioControlador(UsuariosView uV, UsuarioDAO uD){
         this.uV = uV;
         this.uD = uD;
         
+        cargarTabla();
+        
         // Enlazamos los botones con sus acciones
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
+        this.uV.setBtnVolverListener(e -> volverAdmin());
+    }
+    
+    // Método para cargar la tabla
+    private void cargarTabla(){
+        uV.llenarTabla(uD.listarActivos());
     }
     
     // Método para capturar los datos de la interfaz, construye el modelo y lo envia al DAO
@@ -40,6 +50,7 @@ public class UsuarioControlador {
             u.setEmail(uV.getEmail());
             u.setPassword(uV.getPassword());
             u.setCodigoRolFK(uV.getRolId());
+            u.setIntentos(0);
             u.setActivo(uV.isActivo());
             
             // Llamamos al método de insertar
@@ -47,11 +58,18 @@ public class UsuarioControlador {
             
           // Mostramos un mensaje para informarle al usuario que la operación ha sido éxitosa
             uV.mostrarMensaje("Usuario guardado con éxito");
+            
+            // Limpiamos el formulario
+            uV.limpiarFormulario();
+            
+            // Volvemos a cargar la tabla
+            cargarTabla();
         }catch(Exception e){
             uV.mostrarError("Error al guardar: " + e.getMessage());
         }
     }
     
+    // Método para dar de baja a un usuario
     private void eliminar(){
         // Obtener el ID desde la vista (ej. de una fila seleccionada en la tabla)
         int idSeleccionado = uV.getIdSeleccionado(); 
@@ -74,11 +92,22 @@ public class UsuarioControlador {
                 // 3. Llamamos al DAO (que hará el UPDATE a activo=false)
                 uD.eliminar(idSeleccionado);
                 uV.mostrarMensaje("Usuario desactivado correctamente.");
+                cargarTabla();
 
             } catch (Exception ex) {
                 uV.mostrarError("Error al desactivar: " + ex.getMessage());
             }
         }
+    }
+    
+    private void volverAdmin(){
+       VistaAdmin admin = new VistaAdmin();
+
+       new AdminControlador(admin, uD, averiaD, maquinariaD);
+
+       admin.setVisible(true);
+
+       uV.dispose();
     }
 }
 

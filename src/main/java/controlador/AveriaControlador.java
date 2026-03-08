@@ -15,15 +15,20 @@ import vista.*;
 public class AveriaControlador {
     private AveriasView aV;
     private AveriaDAO aD;
+    private UsuarioDAO uD;
+    private MaquinariaDAO mD;
     
+    // Constructor
     public AveriaControlador(AveriasView aV, AveriaDAO aD){
         this.aV = aV;
         this.aD = aD;
         
         // Enlazamos los botones con sus acciones
         this.aV.escucharBtnReportar(e -> reportarFalla());
+        this.aV.setBtnVolverListener(e -> volverAdmin());
     }
     
+    // Método para reportar avería
     private void reportarFalla(){
         try{
             if(aV.getDescInic().isEmpty()){
@@ -44,5 +49,16 @@ public class AveriaControlador {
         }catch(Exception e){
             aV.mostrarError("Error: " + e.getMessage());
         }
+    }
+    
+    // Método para volver el menú "Principal"
+    private void volverAdmin(){
+        VistaAdmin admin = new VistaAdmin();
+        
+        new AdminControlador(admin, uD, aD, mD);
+        
+        admin.setVisible(true);
+        
+        aV.dispose();
     }
 }

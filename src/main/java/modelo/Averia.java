@@ -20,7 +20,7 @@ public class Averia {
    private Timestamp fechaFinalizTecnico;
    private String procRealizadoTecnico;
    private int usuarioReportaFK; // ID del Operario
-   private int usuarioTecnicoFK; // ID del Mecánico
+   private Integer usuarioTecnicoFK; // ID del Mecánico
    private int maquinariaFK;
    private int tipoAveriaFK;
    
@@ -76,10 +76,10 @@ public class Averia {
     public void setUsuarioReportaFK(int usuarioReportaFK) {
         this.usuarioReportaFK = usuarioReportaFK;
     }
-    public int getUsuarioTecnicoFK() {
+    public Integer getUsuarioTecnicoFK() {
         return usuarioTecnicoFK;
     }
-    public void setUsuarioTecnicoFK(int usuarioTecnicoFK) {
+    public void setUsuarioTecnicoFK(Integer usuarioTecnicoFK) {
         this.usuarioTecnicoFK = usuarioTecnicoFK;
     }
     public int getMaquinariaFK() {

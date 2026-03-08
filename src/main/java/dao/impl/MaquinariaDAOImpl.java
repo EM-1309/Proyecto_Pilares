@@ -29,7 +29,12 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
     private static final String SQL_DELETE = "DELETE FROM maquinaria WHERE codigoMaquinaria=?";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM maquinaria WHERE codigoMaquinaria=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM maquinaria";
+    private static final String SQL_SELECT_ACTIVAS = "SELECT * FROM maquinaria WHERE fechaBaja IS NULL"; // SQL para listar las máquinas que están activas
 
+    /**
+     * Método para insertar una nueva máquina
+     * @param m 
+     */
     @Override
     public void insertar(Maquinaria m) {
         try (Connection con = Conexion.getConexion();
@@ -57,6 +62,10 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
         }
     }
 
+    /**
+     * Método modificar una máquina
+     * @param m 
+     */
     @Override
     public void actualizar(Maquinaria m) {
         try (Connection con = Conexion.getConexion();
@@ -86,6 +95,10 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
         }
     }
 
+    /**
+     * Método para eliminar una máquina
+     * @param id 
+     */
     @Override
     public void eliminar(int id) {
         try (Connection con = Conexion.getConexion();
@@ -100,6 +113,11 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
         }
     }
 
+    /**
+     * Método para buscar una máquina según su ID
+     * @param id
+     * @return 
+     */
     @Override
     public Optional<Maquinaria> buscarPorId(int id) {
         Maquinaria m = null;
@@ -118,6 +136,10 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
         return Optional.ofNullable(m);
     }
 
+    /**
+     * Método para seleccionar todas las máquinas
+     * @return 
+     */
     @Override
     public List<Maquinaria> listar() {
         List<Maquinaria> lista = new ArrayList<>();
@@ -147,5 +169,28 @@ public class MaquinariaDAOImpl implements MaquinariaDAO {
         m.setFechaBaja(rs.getDate("fechaBaja")); // Si en BD es NULL, aquí llega null
         m.setTipoMaquinariaFK(rs.getInt("tipoMaquinariaFK"));
         return m;
+    }
+
+    /**
+     * Método para listar las máquinas que están activas
+     * @return 
+     */
+    @Override
+    public List<Maquinaria> listarActivas() {
+        List<Maquinaria> lista = new ArrayList<>();
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVAS);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapResultSetToMaquinaria(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error listando maquinaria activa: " + e.getMessage());
+        }
+
+        return lista;    
     }
 }

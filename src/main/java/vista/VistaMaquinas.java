@@ -17,6 +17,8 @@ public class VistaMaquinas extends javax.swing.JFrame {
      */
     public VistaMaquinas() {
         initComponents();
+        setTitle("Gestión de Máquinas");
+        personalizarVista();
     }
 
     /**
@@ -36,6 +38,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
         btnEstados = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,22 +67,27 @@ public class VistaMaquinas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        btnVolver.setText("Volver");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRefrescarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMaquinaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnVolver)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRefrescarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMaquinaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,7 +107,9 @@ public class VistaMaquinas extends javax.swing.JFrame {
                         .addComponent(btnMaquinaria)
                         .addGap(18, 18, 18)
                         .addComponent(btnEstados)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -129,6 +139,72 @@ public class VistaMaquinas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaMaquinas().setVisible(true));
     }
+    
+    public void setBtnAgregarListener(java.awt.event.ActionListener listener) {
+        btnAgregar.addActionListener(listener);
+    }
+
+    public void setBtnEditarListener(java.awt.event.ActionListener listener) {
+        btnEditar.addActionListener(listener);
+    }
+
+    public void setBtnEliminarListener(java.awt.event.ActionListener listener) {
+        btnEliminar.addActionListener(listener);
+    }
+    
+    public void setBtnVolverListener(java.awt.event.ActionListener listener) {
+        btnVolver.addActionListener(listener);
+    }
+    
+    // Método para obtener columna seleccionada
+    public int getIdSeleccionado() {
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) return -1;
+
+        Object valor = jTable1.getValueAt(fila, 0);
+        return Integer.parseInt(valor.toString());
+    }
+    
+    // Método para mostrar mensaje éxitoso
+    public void mostrarMensaje(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para mostrar un mensaje error
+    public void mostrarError(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // Método para llenar la tabla
+    public void llenarTabla(java.util.List<modelo.Maquinaria> lista) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (modelo.Maquinaria m : lista) {
+            modelo.addRow(new Object[]{
+                m.getCodigoMaquinaria(),
+                m.getNombre(),
+                m.getCodigoEstadoFK(),
+                m.getFechaAlta(),
+                m.getFechaBaja(),
+                m.getTipoMaquinariaFK()
+            });
+        }
+    }
+    
+    // Método para personalizar la clase
+    private void personalizarVista(){
+        Util.EstiloUI.aplicarVentana(this);
+        
+        Util.EstiloUI.aplicarBotonPrimario(btnEditar);
+        Util.EstiloUI.aplicarBotonPrimario(btnAgregar);
+        Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
+        Util.EstiloUI.aplicarBotonPrimario(btnMaquinaria);
+        Util.EstiloUI.aplicarBotonPrimario(btnEstados);
+        Util.EstiloUI.aplicarBotonPrimario(btnRefrescarLista);
+        
+        Util.EstiloUI.aplicarTabla(jTable1);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -137,6 +213,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
     private javax.swing.JButton btnEstados;
     private javax.swing.JButton btnMaquinaria;
     private javax.swing.JButton btnRefrescarLista;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

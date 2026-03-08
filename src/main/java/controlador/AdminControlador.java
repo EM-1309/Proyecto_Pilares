@@ -19,16 +19,19 @@ public class AdminControlador {
     private VistaAdmin vistaAd;
     private UsuarioDAO usuarioD;
     private AveriaDAO averiaD;
+    private MaquinariaDAO maquinariaD;
     
     // Constructor
-    public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD){
+    public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD, MaquinariaDAO maquinariaD){
         this.vistaAd = vistaAd;
         this.usuarioD = usuarioD;
         this.averiaD = averiaD;
+        this.maquinariaD = maquinariaD;
         
         // Asignamos las funciones a los botones del menú de gestión
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
         this.vistaAd.esMenuAverias(e -> abrirAverias());
+        this.vistaAd.esMenuMaquinas(e -> abrirMaquinas());
     }
     
     // Instancia la vista de usuarios, le inyecta su controlador y la muestra.
@@ -56,6 +59,20 @@ public class AdminControlador {
         averiaV.setVisible(true);
         
         // Cerramos vistaAdmin, cuando se abra la vista averia
+        vistaAd.dispose();
+    }
+    
+    // Instancia la vista de Maquinas, le inyacta su controlador y la muestra
+    private void abrirMaquinas(){
+        VistaMaquinas maquinaV = new VistaMaquinas();
+        
+        // Creamos su controlador y le pasamos la vista y el DAO
+        new MaquinaControlador(maquinaV, maquinariaD);
+        
+        // Hacemos visible la vista
+        maquinaV.setVisible(true);
+        
+        // Cerramos la vista admin
         vistaAd.dispose();
     }
 }

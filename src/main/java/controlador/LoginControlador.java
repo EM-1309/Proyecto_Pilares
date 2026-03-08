@@ -5,6 +5,7 @@
 package controlador;
 
 import dao.AveriaDAO;
+import dao.MaquinariaDAO;
 import dao.UsuarioDAO;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -21,12 +22,14 @@ public class LoginControlador {
     private LoginView vistal;
     private UsuarioDAO uDao;
     private AveriaDAO aDao;
+    private MaquinariaDAO mDao;
     
     // Constructor
-    public LoginControlador(LoginView vistal, UsuarioDAO uDao, AveriaDAO aDao){
+    public LoginControlador(LoginView vistal, UsuarioDAO uDao, AveriaDAO aDao, MaquinariaDAO mDao){
         this.vistal = vistal;
         this.uDao = uDao;
         this.aDao = aDao;
+        this.mDao = mDao;
         
         // Escuchamos el botón
         this.vistal.getBtnEntrar().addActionListener(e -> validarAcceso()); 
@@ -35,7 +38,7 @@ public class LoginControlador {
     // Método para validar el acceso del usuario
     private void validarAcceso(){
         // Capturamos datos de los campos del login
-        String email = vistal.getTxtEmail().getText();
+        String email = vistal.getTxtEmail().getText().trim();
         String pas = new String(vistal.getPasswdContraseña().getPassword());
         
         // Comprobamos que los campos no esten vacios
@@ -54,13 +57,20 @@ public class LoginControlador {
             if(u.isActivo()){
                 // Si lo esta, cerramos login
                 vistal.dispose();
-                VistaAdmin admin = new VistaAdmin();
                 
-                // Conectamos el administrador con sus funciones
-                new AdminControlador(admin, this.uDao, this.aDao);
-                
-                // Abrimos la vistaAdmin
-                admin.setVisible(true);
+                if(u.getCodigoRolFK() == 1){
+                    VistaAdmin admin = new VistaAdmin();
+                    admin.mostrarUsuario(u.getNombre());
+                    
+                    new AdminControlador(admin, uDao, aDao, mDao);
+                    
+                    admin.setVisible(true);
+                }else if (u.getCodigoRolFK() == 2){
+                    // VistaOperario ope = new VistaOperario;
+                    // ope.setVisible(true)
+                }else {
+                    JOptionPane.showMessageDialog(null, "Rol no reconocido", "Error", JOptionPane.ERROR_MESSAGE);
+                }  
             }else{
                 // Si no esta activo avisamos al usuario
                 JOptionPane.showMessageDialog(vistal, "Acceso denegado: Usuario inactivo", "Error", JOptionPane.ERROR_MESSAGE);

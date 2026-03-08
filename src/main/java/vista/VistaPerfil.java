@@ -17,6 +17,8 @@ public class VistaPerfil extends javax.swing.JFrame {
      */
     public VistaPerfil() {
         initComponents();
+        setTitle("Perfil");
+        personalizarVista();
     }
 
     /**
@@ -149,6 +151,25 @@ public class VistaPerfil extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaPerfil().setVisible(true));
+    }
+    
+    // Método para personalizar la vista
+    private void personalizarVista(){
+       Util.EstiloUI.aplicarTitulo(jLabel1);
+       
+       Util.EstiloUI.aplicarTexto(jLabel2);
+       Util.EstiloUI.aplicarTexto(jLabel3);
+       Util.EstiloUI.aplicarTexto(jLabel4);
+       Util.EstiloUI.aplicarTexto(jLabel5);
+       Util.EstiloUI.aplicarTexto(jLabel6);
+       Util.EstiloUI.aplicarTexto(jLabel7);
+       
+       Util.EstiloUI.aplicarCampo(jTextField1);
+       Util.EstiloUI.aplicarCampo(jTextField2);
+       Util.EstiloUI.aplicarCampo(jTextField3);
+       Util.EstiloUI.aplicarCampo(jTextField4);
+       Util.EstiloUI.aplicarCampo(jTextField5);
+       Util.EstiloUI.aplicarCampo(jTextField6);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
