@@ -19,12 +19,14 @@ public class AdminControlador {
     private VistaAdmin vistaAd;
     private UsuarioDAO usuarioD;
     private AveriaDAO averiaD;
+    private MaquinariaDAO maquinariaD;
     
     // Constructor
-    public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD){
+    public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD, MaquinariaDAO maquinariaD){
         this.vistaAd = vistaAd;
         this.usuarioD = usuarioD;
         this.averiaD = averiaD;
+        this.maquinariaD = maquinariaD;
         
         // Asignamos las funciones a los botones del menú de gestión
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
