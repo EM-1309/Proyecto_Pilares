@@ -23,21 +23,25 @@ public class UsuarioControlador {
     private MaquinariaDAO maquinariaD;
     
     // Constructor y enlazamos los botones con sus acciones
-    public UsuarioControlador(UsuariosView uV, UsuarioDAO uD){
+    public UsuarioControlador(UsuariosView uV, UsuarioDAO uD, AveriaDAO averiaD, MaquinariaDAO maquinariaD){
         this.uV = uV;
         this.uD = uD;
+        this.averiaD = averiaD;
+        this.maquinariaD = maquinariaD;
         
         cargarTabla();
         
         // Enlazamos los botones con sus acciones
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
+      //  this.uV.setBtnActualizarListener(e -> actualizar());
+        this.uV.setBtnLimpiarListener(e -> uV.limpiarFormulario());
         this.uV.setBtnVolverListener(e -> volverAdmin());
     }
     
     // Método para cargar la tabla
     private void cargarTabla(){
-        uV.llenarTabla(uD.listarActivos());
+        uV.llenarTabla(uD.listar());
     }
     
     // Método para capturar los datos de la interfaz, construye el modelo y lo envia al DAO
@@ -48,6 +52,7 @@ public class UsuarioControlador {
             u.setNombre(uV.getNombre());
             u.setApellido(uV.getApellido());
             u.setEmail(uV.getEmail());
+            u.setTelefono(uV.getTelefono());
             u.setPassword(uV.getPassword());
             u.setCodigoRolFK(uV.getRolId());
             u.setIntentos(0);
@@ -100,6 +105,7 @@ public class UsuarioControlador {
         }
     }
     
+    // Método para volver al menú principal
     private void volverAdmin(){
        VistaAdmin admin = new VistaAdmin();
 
@@ -109,5 +115,6 @@ public class UsuarioControlador {
 
        uV.dispose();
     }
+    
 }
 

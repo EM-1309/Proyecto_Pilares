@@ -32,6 +32,9 @@ public class AdminControlador {
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
         this.vistaAd.esMenuAverias(e -> abrirAverias());
         this.vistaAd.esMenuMaquinas(e -> abrirMaquinas());
+        this.vistaAd.esMenuPerfil(e -> abrirPerfil());
+        this.vistaAd.setCerrarSesionListener(e -> cerrarSesion());
+        this.vistaAd.setSalirListener(e -> salirAplicacion());
     }
     
     // Instancia la vista de usuarios, le inyecta su controlador y la muestra.
@@ -39,7 +42,7 @@ public class AdminControlador {
         UsuariosView usuarioV = new UsuariosView();
         
         // Creamos su controlador y le pasamos la visata y el DAO
-        new UsuarioControlador(usuarioV, usuarioD);
+        new UsuarioControlador(usuarioV, usuarioD, averiaD, maquinariaD);
         
         // Hacemos visible la vista usuario
         usuarioV.setVisible(true);
@@ -74,5 +77,47 @@ public class AdminControlador {
         
         // Cerramos la vista admin
         vistaAd.dispose();
+    }
+    
+    // Instancia de la vista perfil
+    private void abrirPerfil(){
+        VistaPerfil perfilV = new VistaPerfil();
+        
+        // Hacemos visible la vista
+        perfilV.setVisible(true);
+        
+        // Cerramos la vista admin
+        vistaAd.dispose();
+    }
+    
+    // Método para cerrar la sesión y volver al log in
+    private void cerrarSesion() {
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            vistaAd,
+            "¿Desea cerrar sesión y volver al inicio de sesión?",
+            "Cerrar sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            LoginView login = new LoginView();
+            new LoginControlador(login, usuarioD, averiaD, maquinariaD);
+            login.setVisible(true);
+            vistaAd.dispose();
+        }
+    }
+    
+    // Método para salir de aplicación
+    private void salirAplicacion() {
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            vistaAd,
+            "¿Desea salir de la aplicación?",
+            "Salir",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 }
