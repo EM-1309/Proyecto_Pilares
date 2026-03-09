@@ -88,8 +88,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
-              <Component id="lblBienvenida" min="-2" pref="92" max="-2" attributes="0"/>
-              <EmptySpace pref="181" max="32767" attributes="0"/>
+              <Component id="lblBienvenida" min="-2" pref="180" max="-2" attributes="0"/>
+              <EmptySpace pref="264" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
