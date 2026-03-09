@@ -18,6 +18,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     public VistaAdmin() {
         initComponents();
         personalizarVista();
+        mostrarUsuario("admin2");
     }
 
     /**
