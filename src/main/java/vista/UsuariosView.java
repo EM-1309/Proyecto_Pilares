@@ -88,7 +88,12 @@ public class UsuariosView extends javax.swing.JFrame {
 
         btnAgregar.setText("Agregar");
 
-        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setText("Editar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
 
@@ -172,13 +177,13 @@ public class UsuariosView extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(chkActivo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVolver)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnLimpiar)
                         .addComponent(btnEliminar)
                         .addComponent(btnActualizar)
-                        .addComponent(btnAgregar)))
+                        .addComponent(btnAgregar))
+                    .addComponent(btnVolver))
                 .addGap(16, 16, 16))
         );
 
@@ -188,6 +193,10 @@ public class UsuariosView extends javax.swing.JFrame {
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidoActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
