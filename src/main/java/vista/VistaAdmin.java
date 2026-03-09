@@ -154,7 +154,19 @@ public class VistaAdmin extends javax.swing.JFrame {
     
     public void esMenuMaquinas(java.awt.event.ActionListener l){
         btnMaquina.addActionListener(l);
-    } 
+    }
+    
+    public void esMenuPerfil(java.awt.event.ActionListener l){
+        btnPerfil.addActionListener(l);
+    }
+    
+    public void setCerrarSesionListener(java.awt.event.ActionListener l){
+        btnCerrarSesion.addActionListener(l);
+    }
+    
+    public void setSalirListener(java.awt.event.ActionListener l){
+        btnSalir.addActionListener(l);
+    }
     
     private void personalizarVista(){
         Util.EstiloUI.aplicarVentana(this);
