@@ -5,7 +5,7 @@
 package controlador;
 
 import dao.*;
-import modelo.*;
+import modelo.Usuario;
 import vista.*;
 
 /**
