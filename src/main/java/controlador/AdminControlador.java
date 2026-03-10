@@ -5,6 +5,7 @@
 package controlador;
 
 import dao.*;
+import modelo.Usuario;
 import vista.*;
 
 /**
@@ -20,15 +21,14 @@ public class AdminControlador {
     private UsuarioDAO usuarioD;
     private AveriaDAO averiaD;
     private MaquinariaDAO maquinariaD;
-   // private Usuario usuarioActual;
-    
+    private Usuario usuarioActual;
+
     // Constructor
     public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD, MaquinariaDAO maquinariaD){
         this.vistaAd = vistaAd;
         this.usuarioD = usuarioD;
         this.averiaD = averiaD;
         this.maquinariaD = maquinariaD;
-      //  this.usuarioActual = usuarioActual;
         
         // Asignamos las funciones a los botones del menú de gestión
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
@@ -44,7 +44,7 @@ public class AdminControlador {
         UsuariosView usuarioV = new UsuariosView();
         
         // Creamos su controlador y le pasamos la visata y el DAO
-        new UsuarioControlador(usuarioV, usuarioD, averiaD, maquinariaD);
+        new UsuarioControlador(usuarioV, usuarioD, averiaD, maquinariaD, usuarioActual);
         
         // Hacemos visible la vista usuario
         usuarioV.setVisible(true);

@@ -19,22 +19,23 @@ public class UsuarioControlador {
     // Llamamos a las clases
     private UsuariosView uV;
     private UsuarioDAO uD;
+    private Usuario usuarioActual;
+    
+    // Llamamos a las clases externas
     private AveriaDAO averiaD;
     private MaquinariaDAO maquinariaD;
     
     // Constructor y enlazamos los botones con sus acciones
-    public UsuarioControlador(UsuariosView uV, UsuarioDAO uD, AveriaDAO averiaD, MaquinariaDAO maquinariaD){
+    public UsuarioControlador(UsuariosView uV, UsuarioDAO uD, AveriaDAO averiaD, MaquinariaDAO maquinariaD, Usuario usuarioActual){
         this.uV = uV;
         this.uD = uD;
-        this.averiaD = averiaD;
-        this.maquinariaD = maquinariaD;
+        this.usuarioActual = usuarioActual;
         
         cargarTabla();
         
         // Enlazamos los botones con sus acciones
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
-      //  this.uV.setBtnActualizarListener(e -> actualizar());
         this.uV.setBtnLimpiarListener(e -> uV.limpiarFormulario());
         this.uV.setBtnVolverListener(e -> volverAdmin());
     }
@@ -61,7 +62,7 @@ public class UsuarioControlador {
             // Llamamos al método de insertar
             uD.insertar(u);
             
-          // Mostramos un mensaje para informarle al usuario que la operación ha sido éxitosa
+            // Mostramos un mensaje para informarle al usuario que la operación ha sido éxitosa
             uV.mostrarMensaje("Usuario guardado con éxito");
             
             // Limpiamos el formulario
