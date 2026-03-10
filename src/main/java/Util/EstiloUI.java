@@ -166,4 +166,10 @@ public class EstiloUI {
         item.setForeground(COLOR_TEXTO);
         item.setPreferredSize(new Dimension(180, 28));
     }
+    
+    public static void aplicarComboBox(javax.swing.JComboBox<?> combo) {
+        combo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+        combo.setBackground(java.awt.Color.WHITE);
+        combo.setForeground(COLOR_TEXTO);
+    }
 }
