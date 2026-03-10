@@ -360,6 +360,7 @@ public class UsuariosView extends javax.swing.JFrame {
         Util.EstiloUI.aplicarCampo(txtEmail);
         Util.EstiloUI.aplicarCampo(txtPassword);
         Util.EstiloUI.aplicarComboBox(cmbRol);
+        Util.EstiloUI.aplicarCheckBox(chkActivo);
         
         
         Util.EstiloUI.aplicarBotonExito(btnAgregar);

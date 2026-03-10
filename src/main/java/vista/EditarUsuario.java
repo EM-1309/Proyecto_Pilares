@@ -45,6 +45,7 @@ public class EditarUsuario extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         cmbRol = new javax.swing.JComboBox<>();
+        chkActivo = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,6 +86,13 @@ public class EditarUsuario extends javax.swing.JFrame {
 
         cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Operario", "Mecánico" }));
 
+        chkActivo.setText("Usuario Activo");
+        chkActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkActivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,10 +100,6 @@ public class EditarUsuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVolver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -112,16 +116,24 @@ public class EditarUsuario extends javax.swing.JFrame {
                             .addComponent(txtEmail)
                             .addComponent(txtApellido)
                             .addComponent(txtNombre))
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVolver)
+                            .addComponent(chkActivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(btnGuardar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -145,8 +157,11 @@ public class EditarUsuario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                            .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(chkActivo))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolver)
                     .addComponent(btnGuardar))
@@ -159,6 +174,10 @@ public class EditarUsuario extends javax.swing.JFrame {
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidoActionPerformed
+
+    private void chkActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkActivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkActivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,6 +269,7 @@ public class EditarUsuario extends javax.swing.JFrame {
         Util.EstiloUI.aplicarCampo(txtEmail);
         Util.EstiloUI.aplicarCampo(txtPassword);
         Util.EstiloUI.aplicarComboBox(cmbRol);
+        Util.EstiloUI.aplicarCheckBox(chkActivo);
         
         
         Util.EstiloUI.aplicarBotonExito(btnGuardar);
@@ -293,7 +313,6 @@ public class EditarUsuario extends javax.swing.JFrame {
     
     // Método para cargar el formulario
     public void cargarUsuarioEnFormulario(modelo.Usuario u) {
-
         txtNombre.setText(u.getNombre());
         txtApellido.setText(u.getApellido());
         txtTelefono.setText(u.getTelefono());
@@ -305,6 +324,8 @@ public class EditarUsuario extends javax.swing.JFrame {
             case 2 -> cmbRol.setSelectedItem("Técnico");
             case 3 -> cmbRol.setSelectedItem("Operario");
         }
+        
+        chkActivo.setSelected(u.isActivo());
     }
     
     // Métodos para mostrar un tipo de mensaje
@@ -324,17 +345,22 @@ public class EditarUsuario extends javax.swing.JFrame {
         txtTelefono.setText("");
         txtPassword.setText("");
         cmbRol.setSelectedIndex(0);
-       // chkActivo.setSelected(true);
+        chkActivo.setSelected(false);
         tblUsuarios.clearSelection();
     }
     
     public void setTablaMouseListener(java.awt.event.MouseListener l) {
         tblUsuarios.addMouseListener(l);
     }
+    
+    public boolean isActivo() {
+        return chkActivo.isSelected();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JCheckBox chkActivo;
     private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

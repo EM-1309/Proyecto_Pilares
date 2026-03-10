@@ -172,4 +172,9 @@ public class EstiloUI {
         combo.setBackground(java.awt.Color.WHITE);
         combo.setForeground(COLOR_TEXTO);
     }
+    
+    public static void aplicarCheckBox(javax.swing.JCheckBox chk) {
+        chk.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+        chk.setForeground(COLOR_TEXTO);
+    }
 }
