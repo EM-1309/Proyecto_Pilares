@@ -6,18 +6,17 @@ package vista;
 
 /**
  *
- * @author danmanfer2
+ * @author emmnavmoj
  */
-public class UsuariosView extends javax.swing.JFrame {
+public class EditarUsuario extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UsuariosView.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarUsuario.class.getName());
 
     /**
-     * Creates new form UsuariosView
+     * Creates new form EditarUsuario
      */
-    public UsuariosView() {
+    public EditarUsuario() {
         initComponents();
-        setTitle("Gestión de Usuarios");
         personalizarVista();
     }
 
@@ -31,6 +30,7 @@ public class UsuariosView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -40,15 +40,12 @@ public class UsuariosView extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
-        chkActivo = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         cmbRol = new javax.swing.JComboBox<>();
+        chkActivo = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,8 +67,6 @@ public class UsuariosView extends javax.swing.JFrame {
             }
         });
 
-        chkActivo.setText("Usuario Activo");
-
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -85,66 +80,60 @@ public class UsuariosView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblUsuarios);
 
-        btnAgregar.setText("Agregar");
-
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-
         btnVolver.setText("Volver");
 
+        btnGuardar.setText("Guardar");
+
         cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Operario", "Mecánico" }));
+
+        chkActivo.setText("Usuario Activo");
+        chkActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkActivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNombre)
-                                    .addComponent(txtApellido)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtTelefono)
-                                    .addComponent(cmbRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtPassword)))
-                            .addComponent(chkActivo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword)
+                            .addComponent(cmbRol, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTelefono)
+                            .addComponent(txtEmail)
+                            .addComponent(txtApellido)
+                            .addComponent(txtNombre))
+                        .addGap(26, 26, 26))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVolver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditar)
-                        .addGap(36, 36, 36))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVolver)
+                            .addComponent(chkActivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(btnGuardar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -169,16 +158,14 @@ public class UsuariosView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(chkActivo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnAgregar))
-                    .addComponent(btnVolver))
-                .addGap(16, 16, 16))
+                        .addGap(24, 24, 24)
+                        .addComponent(chkActivo))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVolver)
+                    .addComponent(btnGuardar))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -188,9 +175,9 @@ public class UsuariosView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidoActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void chkActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkActivoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_chkActivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,9 +201,84 @@ public class UsuariosView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UsuariosView().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new EditarUsuario().setVisible(true));
     }
     
+    /**
+     * Recibe una lista de usuarios del modelo y rellena la JTable.
+     * @param usuarios
+    */
+    public void llenarTabla(java.util.List<modelo.Usuario> usuarios) {
+        // Obtenemos el modelo de la tabla para poder modificar sus filas
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblUsuarios.getModel();
+        
+        // 1. Limpiamos la tabla primero (para no duplicar datos al refrescar)
+        modelo.setRowCount(0);
+        
+        // 2. Recorremos la lista y agregamos filas una por una
+        for (modelo.Usuario u : usuarios) {
+            modelo.addRow(new Object[]{
+                u.getCodigoUsuario(),
+                u.getNombre(),
+                u.getApellido(),
+                u.getEmail(),
+                u.getCodigoRolFK(),
+                u.isActivo() ? "Sí" : "No"
+            });
+        }
+    }
+    
+    /**
+     * Devuelve el ID del usuario seleccionado en la tabla.
+     * Retorna -1 si no hay ninguna fila seleccionada.
+     * @return 
+    */
+    public int getIdSeleccionado() {
+        int fila = tblUsuarios.getSelectedRow();
+        if (fila == -1) {
+            return -1;
+        }
+        // Asumiendo que la columna 0 es el ID (según tu modelo de tabla)
+        return (int) tblUsuarios.getValueAt(fila, 0);
+    }
+    
+    
+    // Métodos para los botones
+    public void escucharGuardar(java.awt.event.ActionListener listener){
+        btnGuardar.addActionListener(listener);
+    }
+    
+    public void setBtnVolverListener(java.awt.event.ActionListener listener) {
+        btnVolver.addActionListener(listener);
+    }
+    
+    // Método para personalizar la vista
+    private void personalizarVista(){
+        Util.EstiloUI.aplicarVentana(this);
+        
+        Util.EstiloUI.aplicarTexto(jLabel1);
+        Util.EstiloUI.aplicarTexto(jLabel2);
+        Util.EstiloUI.aplicarTexto(jLabel3);
+        Util.EstiloUI.aplicarTexto(jLabel4);
+        Util.EstiloUI.aplicarTexto(jLabel5);
+        Util.EstiloUI.aplicarTexto(jLabel6);
+        
+        Util.EstiloUI.aplicarCampo(txtNombre);
+        Util.EstiloUI.aplicarCampo(txtApellido);
+        Util.EstiloUI.aplicarCampo(txtTelefono);
+        Util.EstiloUI.aplicarCampo(txtEmail);
+        Util.EstiloUI.aplicarCampo(txtPassword);
+        Util.EstiloUI.aplicarComboBox(cmbRol);
+        Util.EstiloUI.aplicarCheckBox(chkActivo);
+        
+        
+        Util.EstiloUI.aplicarBotonExito(btnGuardar);
+        Util.EstiloUI.aplicarBotonSecundario(btnVolver);
+        
+        Util.EstiloUI.aplicarTabla(tblUsuarios);
+    }
+    
+    // Getters
     public String getNombre() {
         return txtNombre.getText();
     }
@@ -248,82 +310,34 @@ public class UsuariosView extends javax.swing.JFrame {
             default -> 0;
         };
     }
+    
+    // Método para cargar el formulario
+    public void cargarUsuarioEnFormulario(modelo.Usuario u) {
+        txtNombre.setText(u.getNombre());
+        txtApellido.setText(u.getApellido());
+        txtTelefono.setText(u.getTelefono());
+        txtEmail.setText(u.getEmail());
+        txtPassword.setText(u.getPassword());
 
-    public boolean isActivo() {
-        return chkActivo.isSelected();
-    }
-
-    // =======================================================
-    // MÉTODOS PARA MANIPULAR LA TABLA
-    // =======================================================
-
-    /**
-     * Recibe una lista de usuarios del modelo y rellena la JTable.
-     * @param usuarios
-     */
-    public void llenarTabla(java.util.List<modelo.Usuario> usuarios) {
-        // Obtenemos el modelo de la tabla para poder modificar sus filas
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblUsuarios.getModel();
-        
-        // 1. Limpiamos la tabla primero (para no duplicar datos al refrescar)
-        modelo.setRowCount(0);
-        
-        // 2. Recorremos la lista y agregamos filas una por una
-        for (modelo.Usuario u : usuarios) {
-            modelo.addRow(new Object[]{
-                u.getCodigoUsuario(),
-                u.getNombre(),
-                u.getApellido(),
-                u.getEmail(),
-                u.getCodigoRolFK(),
-                u.isActivo() ? "Sí" : "No"
-            });
+        switch (u.getCodigoRolFK()) {
+            case 1 -> cmbRol.setSelectedItem("Administrador");
+            case 2 -> cmbRol.setSelectedItem("Técnico");
+            case 3 -> cmbRol.setSelectedItem("Operario");
         }
+        
+        chkActivo.setSelected(u.isActivo());
+    }
+    
+    // Métodos para mostrar un tipo de mensaje
+    public void mostrarMensaje(String msg) {
+        javax.swing.JOptionPane.showMessageDialog(this, msg);
     }
 
-    /**
-     * Devuelve el ID del usuario seleccionado en la tabla.
-     * Retorna -1 si no hay ninguna fila seleccionada.
-     * @return 
-     */
-    public int getIdSeleccionado() {
-        int fila = tblUsuarios.getSelectedRow();
-        if (fila == -1) {
-            return -1;
-        }
-        // Asumiendo que la columna 0 es el ID (según tu modelo de tabla)
-        return (int) tblUsuarios.getValueAt(fila, 0);
-    }
-
-    // =======================================================
-    // LISTENERS (Conexión con los botones)
-    // =======================================================
-    
-    // Métodos puente para botones
-    public void escucharBtnAgregar(java.awt.event.ActionListener l) { 
-        btnAgregar.addActionListener(l); 
+    public void mostrarError(String msg) {
+        javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
-    public void escucharBtnEliminar(java.awt.event.ActionListener l) { 
-        btnEliminar.addActionListener(l); 
-    }
-    
-    public void setBtnLimpiarListener(java.awt.event.ActionListener l) {
-        btnEditar.addActionListener(l);
-    }
-    
-    public void setBtnVolverListener(java.awt.event.ActionListener listener) {
-        btnVolver.addActionListener(listener);
-    }
-    
-    public void escucharEditar(java.awt.event.ActionListener listener){
-        btnEditar.addActionListener(listener);
-    }
-
-    // =======================================================
-    // UTILIDADES
-    // =======================================================
-
+    // Método para limpiar el formulario
     public void limpiarFormulario() {
         txtNombre.setText("");
         txtApellido.setText("");
@@ -334,46 +348,17 @@ public class UsuariosView extends javax.swing.JFrame {
         chkActivo.setSelected(false);
         tblUsuarios.clearSelection();
     }
-
-    public void mostrarMensaje(String msg) {
-        javax.swing.JOptionPane.showMessageDialog(this, msg);
-    }
-
-    public void mostrarError(String msg) {
-        javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    
+    public void setTablaMouseListener(java.awt.event.MouseListener l) {
+        tblUsuarios.addMouseListener(l);
     }
     
-    // Método para personalizar la vista
-    private void personalizarVista(){
-        Util.EstiloUI.aplicarVentana(this);
-        
-        Util.EstiloUI.aplicarTexto(jLabel1);
-        Util.EstiloUI.aplicarTexto(jLabel2);
-        Util.EstiloUI.aplicarTexto(jLabel3);
-        Util.EstiloUI.aplicarTexto(jLabel4);
-        Util.EstiloUI.aplicarTexto(jLabel5);
-        Util.EstiloUI.aplicarTexto(jLabel6);
-        
-        Util.EstiloUI.aplicarCampo(txtNombre);
-        Util.EstiloUI.aplicarCampo(txtApellido);
-        Util.EstiloUI.aplicarCampo(txtTelefono);
-        Util.EstiloUI.aplicarCampo(txtEmail);
-        Util.EstiloUI.aplicarCampo(txtPassword);
-        Util.EstiloUI.aplicarComboBox(cmbRol);
-        Util.EstiloUI.aplicarCheckBox(chkActivo);
-        
-        
-        Util.EstiloUI.aplicarBotonExito(btnAgregar);
-        Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
-        Util.EstiloUI.aplicarBotonSecundario(btnEditar);
-        
-        Util.EstiloUI.aplicarTabla(tblUsuarios);
+    public boolean isActivo() {
+        return chkActivo.isSelected();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JCheckBox chkActivo;
     private javax.swing.JComboBox<String> cmbRol;

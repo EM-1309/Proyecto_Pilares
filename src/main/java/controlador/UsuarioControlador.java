@@ -21,7 +21,7 @@ public class UsuarioControlador {
     private UsuarioDAO uD;
     private Usuario usuarioActual;
     
-    // Llamamos a las clases externas
+    // Llamamos a unas clases extras
     private AveriaDAO averiaD;
     private MaquinariaDAO maquinariaD;
     
@@ -37,6 +37,7 @@ public class UsuarioControlador {
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
         this.uV.setBtnLimpiarListener(e -> uV.limpiarFormulario());
+        this.uV.escucharEditar(e -> editarV());
         this.uV.setBtnVolverListener(e -> volverAdmin());
     }
     
@@ -117,5 +118,15 @@ public class UsuarioControlador {
        uV.dispose();
     }
     
+    // Método para ir a la vista de Editar
+    private void editarV(){
+        EditarUsuario editarU = new EditarUsuario();
+        
+        new EditarUsuarioControlador(editarU, uD, averiaD, maquinariaD, usuarioActual);
+        
+        editarU.setVisible(true);
+        
+        uV.dispose();
+    }
 }
 
