@@ -7,7 +7,6 @@ package controlador;
 import dao.AveriaDAO;
 import dao.MaquinariaDAO;
 import dao.UsuarioDAO;
-import modelo.Maquinaria;
 import vista.VistaAdmin;
 import vista.VistaMaquinas;
 

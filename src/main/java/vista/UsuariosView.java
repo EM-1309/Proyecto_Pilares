@@ -48,7 +48,6 @@ public class UsuariosView extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,8 +96,6 @@ public class UsuariosView extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
 
-        btnActualizar.setText("Actualizar");
-
         btnVolver.setText("Volver");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,9 +133,7 @@ public class UsuariosView extends javax.swing.JFrame {
                         .addComponent(btnVolver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLimpiar)
@@ -181,7 +176,6 @@ public class UsuariosView extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnLimpiar)
                         .addComponent(btnEliminar)
-                        .addComponent(btnActualizar)
                         .addComponent(btnAgregar))
                     .addComponent(btnVolver))
                 .addGap(16, 16, 16))
@@ -304,10 +298,6 @@ public class UsuariosView extends javax.swing.JFrame {
         btnAgregar.addActionListener(l);
     }
 
-    public void setBtnActualizarListener(java.awt.event.ActionListener l) {
-        btnActualizar.addActionListener(l);
-    }
-
     public void setBtnEliminarListener(java.awt.event.ActionListener l) {
         btnEliminar.addActionListener(l);
     }
@@ -373,13 +363,11 @@ public class UsuariosView extends javax.swing.JFrame {
         Util.EstiloUI.aplicarBotonExito(btnAgregar);
         Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
         Util.EstiloUI.aplicarBotonSecundario(btnLimpiar);
-        Util.EstiloUI.aplicarBotonSecundario(btnActualizar);
         
         Util.EstiloUI.aplicarTabla(tblUsuarios);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;

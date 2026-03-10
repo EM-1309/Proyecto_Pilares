@@ -18,7 +18,6 @@ public class VistaAdmin extends javax.swing.JFrame {
     public VistaAdmin() {
         initComponents();
         personalizarVista();
-        mostrarUsuario("admin2");
     }
 
     /**
@@ -113,10 +112,6 @@ public class VistaAdmin extends javax.swing.JFrame {
         // puedes cargar la lista directamente aquí:
 
         viewUsuarios.llenarTabla(daoUsuario.listar());
-
-        // HACER VISIBLE LA VENTANA
-        viewUsuarios.setVisible(true);
-
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     /**

@@ -23,6 +23,7 @@ public class LoginControlador {
     private UsuarioDAO uDao;
     private AveriaDAO aDao;
     private MaquinariaDAO mDao;
+
     
     // Constructor
     public LoginControlador(LoginView vistal, UsuarioDAO uDao, AveriaDAO aDao, MaquinariaDAO mDao){
