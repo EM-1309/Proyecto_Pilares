@@ -28,6 +28,24 @@ public class VistaMaquinas extends javax.swing.JFrame {
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         personalizarVista();
         
+        getContentPane().removeAll(); // limpiar layout de NetBeans
+
+        setLayout(new java.awt.BorderLayout());
+        javax.swing.JPanel panelBotones = new javax.swing.JPanel();
+        panelBotones.setLayout(new java.awt.GridLayout(6, 1, 10, 10));
+
+        panelBotones.add(btnAgregar);
+        panelBotones.add(btnEditar);
+        panelBotones.add(btnEliminar);
+        panelBotones.add(btnRefrescarLista);
+        panelBotones.add(btnMaquinaria);
+        panelBotones.add(btnEstados);
+        
+        add(panelBotones, java.awt.BorderLayout.WEST);
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(btnVolver, java.awt.BorderLayout.SOUTH);
+        revalidate();
+        repaint();
            jTable1.setModel(new javax.swing.table.DefaultTableModel(
     new Object [][] {},
     new String [] {
@@ -60,28 +78,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
         
         // Después de la línea donde se crean los botones, agrega:
 
-    btnEditar.addActionListener(new java.awt.event.ActionListener() {
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnEditarActionPerformed(evt);
-        }
-    });
-
-    btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnEliminarActionPerformed(evt);
-        }
-    });
-
     
-    
-    btnRefrescarLista.addActionListener(new java.awt.event.ActionListener() {
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnRefrescarListaActionPerformed(evt);
-        }
-    });
 
     btnMaquinaria.addActionListener(new java.awt.event.ActionListener() {
         @Override
