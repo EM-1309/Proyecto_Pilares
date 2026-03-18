@@ -40,6 +40,10 @@ public class EstiloUI {
     public static final Font FUENTE_NORMAL = new Font("Segoe UI", Font.PLAIN, 14);
     public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 14);
 
+    public static void aplicarPantallaCompleta(javax.swing.JFrame frame) {
+        frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+    
     // Método para aplicar color en una ventana
     public static void aplicarVentana(JFrame frame) {
         frame.getContentPane().setBackground(COLOR_FONDO);

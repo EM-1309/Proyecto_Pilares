@@ -8,17 +8,17 @@ package vista;
  *
  * @author konatasht
  */
-public class VistaAgreagarMaquina extends javax.swing.JFrame {
+public class VistaAgregarMaquina extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaAgreagarMaquina.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaAgregarMaquina.class.getName());
 
     /**
      * Creates new form VistaAgreagarMaquina
      */
-    public VistaAgreagarMaquina() {
+    public VistaAgregarMaquina() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,9 +144,48 @@ public class VistaAgreagarMaquina extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VistaAgreagarMaquina().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VistaAgregarMaquina().setVisible(true));
     }
 
+    public javax.swing.JButton getBtnCrear(){
+        return btnCrear;
+    }
+
+    public javax.swing.JButton getBtnVolver(){
+        return btnVolver;
+    }
+
+    public String getTxtNombre(){
+        return jTextField1.getText();
+    }
+
+    public String getTxtCodigo(){
+        return jTextField2.getText();
+    }
+
+    public String getTxtDescripcion(){
+        return jTextField3.getText();
+    }
+
+    public String getTipoMaquina(){
+        return jComboBox1.getSelectedItem().toString();
+    }
+
+    public void limpiarFormulario(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
+
+    public void mostrarMensaje(String msg){
+        javax.swing.JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public void mostrarError(String msg){
+        javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnVolver;

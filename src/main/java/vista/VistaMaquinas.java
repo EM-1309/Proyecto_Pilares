@@ -4,6 +4,13 @@
  */
 package vista;
 
+import controlador.AgregarMaquina;
+import controlador.MaquinaControlador;
+import dao.MaquinariaDAO;
+import dao.impl.MaquinariaDAOImpl;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author konatasht
@@ -18,8 +25,79 @@ public class VistaMaquinas extends javax.swing.JFrame {
     public VistaMaquinas() {
         initComponents();
         setTitle("Gestión de Máquinas");
+        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         personalizarVista();
+        
+           jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {},
+    new String [] {
+        "Nombre", "Cód. Maq", "Estado", "Descripción"
     }
+) {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+});
+        
+        TableRowSorter<DefaultTableModel> sorter = 
+        new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
+
+        jTable1.setRowSorter(sorter);
+        sorter.setComparator(1, new java.util.Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return a.compareTo(b);
+            }
+        });
+
+        sorter.setComparator(2, new java.util.Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return a.compareTo(b);
+            }
+        });
+        
+     
+        
+        // Después de la línea donde se crean los botones, agrega:
+
+    btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnEditarActionPerformed(evt);
+        }
+    });
+
+    btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnEliminarActionPerformed(evt);
+        }
+    });
+
+    
+    
+    btnRefrescarLista.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnRefrescarListaActionPerformed(evt);
+        }
+    });
+
+    btnMaquinaria.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnMaquinariaActionPerformed(evt);
+        }
+    });
+
+    btnEstados.addActionListener(new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnEstadosActionPerformed(evt);
+        }
+    });
+
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,16 +121,46 @@ public class VistaMaquinas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAgregar.setText("Agregar Máquina");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnRefrescarLista.setText("Refrescar Lista");
+        btnRefrescarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefrescarListaActionPerformed(evt);
+            }
+        });
 
         btnMaquinaria.setText("Tipo Maquinaria");
+        btnMaquinaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaquinariaActionPerformed(evt);
+            }
+        });
 
         btnEstados.setText("Tipo Estados");
+        btnEstados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadosActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,9 +173,15 @@ public class VistaMaquinas extends javax.swing.JFrame {
                 "Nombre", "Cód. Maq", "Estado", "Descripción"
             }
         ));
+        jTable1.setFocusable(false);
         jScrollPane1.setViewportView(jTable1);
 
         btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,7 +201,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
                             .addComponent(btnEstados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(56, 56, 56)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,7 +221,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
                         .addComponent(btnMaquinaria)
                         .addGap(18, 18, 18)
                         .addComponent(btnEstados)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(15, 15, 15))
         );
@@ -115,30 +229,51 @@ public class VistaMaquinas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+   
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+       
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+           
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnMaquinariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaquinariaActionPerformed
+
+    }//GEN-LAST:event_btnMaquinariaActionPerformed
+
+    private void btnEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadosActionPerformed
+       
+   
+    }//GEN-LAST:event_btnEstadosActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+     
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnRefrescarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarListaActionPerformed
+        
+    }//GEN-LAST:event_btnRefrescarListaActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VistaMaquinas().setVisible(true));
-    }
+    java.awt.EventQueue.invokeLater(() -> {
+        VistaMaquinas vista = new VistaMaquinas();
+        MaquinariaDAO dao = new MaquinariaDAOImpl();
+        new MaquinaControlador(vista, dao);
+
+        vista.setVisible(true);
+    });
+}
+    
+    
     
     public void setBtnAgregarListener(java.awt.event.ActionListener listener) {
         btnAgregar.addActionListener(listener);
@@ -152,6 +287,10 @@ public class VistaMaquinas extends javax.swing.JFrame {
         btnEliminar.addActionListener(listener);
     }
     
+    public void setBtnRefrescarListaListener(java.awt.event.ActionListener listener) {
+        btnRefrescarLista.addActionListener(listener);
+    }
+    
     public void setBtnVolverListener(java.awt.event.ActionListener listener) {
         btnVolver.addActionListener(listener);
     }
@@ -161,7 +300,7 @@ public class VistaMaquinas extends javax.swing.JFrame {
         int fila = jTable1.getSelectedRow();
         if (fila == -1) return -1;
 
-        Object valor = jTable1.getValueAt(fila, 0);
+        Object valor = jTable1.getValueAt(fila, 1);
         return Integer.parseInt(valor.toString());
     }
     
@@ -177,32 +316,31 @@ public class VistaMaquinas extends javax.swing.JFrame {
     
     // Método para llenar la tabla
     public void llenarTabla(java.util.List<modelo.Maquinaria> lista) {
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0);
 
-        for (modelo.Maquinaria m : lista) {
-            modelo.addRow(new Object[]{
-                m.getCodigoMaquinaria(),
-                m.getNombre(),
-                m.getCodigoEstadoFK(),
-                m.getFechaAlta(),
-                m.getFechaBaja(),
-                m.getTipoMaquinariaFK()
-            });
-        }
+    javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+    modelo.setRowCount(0);
+    for (modelo.Maquinaria m : lista) {
+        modelo.addRow(new Object[]{
+            m.getNombre(),
+            m.getCodigoMaquinaria(),
+            m.getCodigoEstadoFK(),
+            m.getTipoMaquinariaFK()
+        });
     }
+}
     
     // Método para personalizar la clase
     private void personalizarVista(){
+        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         Util.EstiloUI.aplicarVentana(this);
-        
         Util.EstiloUI.aplicarBotonPrimario(btnEditar);
         Util.EstiloUI.aplicarBotonPrimario(btnAgregar);
         Util.EstiloUI.aplicarBotonPeligro(btnEliminar);
         Util.EstiloUI.aplicarBotonPrimario(btnMaquinaria);
         Util.EstiloUI.aplicarBotonPrimario(btnEstados);
         Util.EstiloUI.aplicarBotonPrimario(btnRefrescarLista);
-        
         Util.EstiloUI.aplicarTabla(jTable1);
     }
 
