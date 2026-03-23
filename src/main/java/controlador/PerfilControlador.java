@@ -7,6 +7,9 @@ package controlador;
 import dao.AveriaDAO;
 import dao.MaquinariaDAO;
 import dao.UsuarioDAO;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import vista.VistaAdmin;
 import vista.VistaPerfil;
 import modelo.Usuario;
@@ -22,11 +25,11 @@ public class PerfilControlador {
     private MaquinariaDAO maquinariaD;
     private Usuario usuarioActual;
 
-    public PerfilControlador(VistaPerfil vistaP, UsuarioDAO usuarioD, AveriaDAO averiaD, MaquinariaDAO maquinariaD, Usuario usuarioActual) {
+    public PerfilControlador(VistaPerfil vistaP, Usuario usuarioActual) {
         this.vistaP = vistaP;
-        this.usuarioD = usuarioD;
-        this.averiaD = averiaD;
-        this.maquinariaD = maquinariaD;
+        this.usuarioD = new UsuarioDAOImpl();
+        this.averiaD = new AveriaDAOImpl();
+        this.maquinariaD = new MaquinariaDAOImpl();
         this.usuarioActual = usuarioActual;
 
         vistaP.cargarDatosUsuario(usuarioActual);
@@ -56,12 +59,11 @@ public class PerfilControlador {
     }
 
     private void volverAdmin() {
-        VistaAdmin admin = new VistaAdmin();
-        // admin.mostrarUsuario(usuarioActual.getNombre(), usuarioActual.getApellido());
+            VistaAdmin admin = new VistaAdmin();
 
-        // new AdminControlador(admin, usuarioD, averiaD, maquinariaD, usuarioActual);
-        admin.setVisible(true);
+            new AdminControlador(admin, usuarioActual);
 
-        vistaP.dispose();
+            admin.setVisible(true);
+            vistaP.dispose();
     }
 }

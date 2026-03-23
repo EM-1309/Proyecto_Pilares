@@ -7,6 +7,9 @@ package controlador;
 import dao.AveriaDAO;
 import dao.MaquinariaDAO;
 import dao.UsuarioDAO;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import java.util.Optional;
 import modelo.Usuario;
 import vista.EditarUsuario;
@@ -25,11 +28,11 @@ public class EditarUsuarioControlador {
     private Usuario usuarioActual;
     
     // Constructor
-    public EditarUsuarioControlador(EditarUsuario vistaE, UsuarioDAO usuarioD, AveriaDAO averiaD, MaquinariaDAO maquinariaD, Usuario usuarioActual) {
+    public EditarUsuarioControlador(EditarUsuario vistaE, Usuario usuarioActual) {
         this.vistaE = vistaE;
-        this.usuarioD = usuarioD;
-        this.averiaD = averiaD;
-        this.maquinariaD = maquinariaD;
+        this.usuarioD = new UsuarioDAOImpl();
+        this.averiaD = new AveriaDAOImpl();
+        this.maquinariaD = new MaquinariaDAOImpl();
         this.usuarioActual = usuarioActual;
 
         cargarTabla();
@@ -107,7 +110,7 @@ public class EditarUsuarioControlador {
     // Método para volver a la vista Usuario
     private void volverUsuarios() {
         UsuariosView usuariosV = new UsuariosView();
-        new UsuarioControlador(usuariosV, usuarioD, averiaD, maquinariaD, usuarioActual);
+        new UsuarioControlador(usuariosV, usuarioActual);
         usuariosV.setVisible(true);
         vistaE.dispose();
     }

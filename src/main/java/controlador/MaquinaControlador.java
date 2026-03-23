@@ -1,78 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
-import dao.AveriaDAO;
-import dao.MaquinariaDAO;
-import dao.UsuarioDAO;
-import vista.VistaAdmin;
-import vista.VistaMaquinas;
+import dao.*;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
+import modelo.Maquinaria;
+import modelo.Usuario;
+import vista.*;
 
-/**
- *
- * @author Mario
- */
 public class MaquinaControlador {
-    private VistaMaquinas vistaM;
-    private MaquinariaDAO maquinariaD;
-    private UsuarioDAO usuarioD;
-    private AveriaDAO averiaD;
 
-   // Constructor
-    public MaquinaControlador(VistaMaquinas vistaM, MaquinariaDAO maquinariaD) {
-        this.vistaM = vistaM;
-        this.maquinariaD = maquinariaD;
+    private VistaMaquinas mV;
+    private MaquinariaDAO mD;
+    private UsuarioDAO uD;
+    private AveriaDAO aD;
+    private Usuario usuarioActual;
+
+    public MaquinaControlador(VistaMaquinas mV, Usuario usuarioActual){
+        this.mV = mV;
+        this.mD = new MaquinariaDAOImpl();
+        this.uD = new UsuarioDAOImpl();
+        this.aD = new AveriaDAOImpl();
+        this.usuarioActual = usuarioActual;
 
         cargarTabla();
 
-        this.vistaM.setBtnEliminarListener(e -> eliminar());
-        this.vistaM.setBtnVolverListener(e -> volverAdmin());
-
+        this.mV.setBtnAgregarListener(e -> abrirAgregar());
+        this.mV.setBtnEliminarListener(e -> eliminar());
+        this.mV.setBtnVolverListener(e -> volverAdmin());
     }
 
-    // Método para cargar la tabla
-    private void cargarTabla() {
-        vistaM.llenarTabla(maquinariaD.listar());
+    private void cargarTabla(){
+        mV.llenarTabla(mD.listar());
     }
 
-    // Método para volver al menu "Principal"
-    private void volverAdmin() {
-        VistaAdmin admin = new VistaAdmin();
-
-        new AdminControlador(admin, usuarioD, averiaD, maquinariaD);
-
-        admin.setVisible(true);
-
-        vistaM.dispose();
+    private void abrirAgregar(){
+        VistaAgregarMaquina vistaA = new VistaAgregarMaquina();
+        new AgregarMaquina(vistaA, usuarioActual);
+        mV.dispose();
+        vistaA.setVisible(true);
     }
 
-    // Método para eliminar maquinas
-    private void eliminar() {
-        int idSeleccionado = vistaM.getIdSeleccionado();
+    private void eliminar(){
+        int id = mV.getIdSeleccionado();
 
-        if (idSeleccionado == -1) {
-            vistaM.mostrarError("Debe seleccionar una máquina de la tabla.");
+        if(id == -1){
+            mV.mostrarError("Selecciona una máquina");
             return;
         }
 
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            vistaM,
-            "¿Está seguro de que desea eliminar esta máquina?",
-            "Confirmar eliminación",
-            javax.swing.JOptionPane.YES_NO_OPTION
-        );
-
-        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-            try {
-                maquinariaD.eliminar(idSeleccionado);
-                vistaM.mostrarMensaje("Maquinaria eliminada correctamente.");
-                cargarTabla();
-
-            } catch (Exception e) {
-                vistaM.mostrarError("Error al eliminar maquinaria: " + e.getMessage());
-            }
+        try{
+            mD.eliminar(id);
+            mV.mostrarMensaje("Máquina eliminada");
+            cargarTabla();
+        }catch(Exception e){
+            mV.mostrarError("Error: " + e.getMessage());
         }
-    } 
+    }
+
+    private void volverAdmin(){
+        VistaAdmin admin = new VistaAdmin();
+        new AdminControlador(admin, usuarioActual);
+        admin.setVisible(true);
+        mV.dispose();
+    }
 }
