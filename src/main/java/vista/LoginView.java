@@ -4,6 +4,8 @@
  */
 package vista;
 
+import javax.swing.JCheckBox;
+
 /**
  *
  * @author daniel
@@ -36,7 +38,7 @@ public class LoginView extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         passwdContraseña = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        checkRecordar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +52,8 @@ public class LoginView extends javax.swing.JFrame {
         btnEntrar.setText("ENTRAR");
         btnEntrar.addActionListener(this::btnEntrarActionPerformed);
 
-        jCheckBox1.setText("Recordar ");
+        checkRecordar.setText("Recordar ");
+        checkRecordar.addActionListener(this::checkRecordarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,7 +74,7 @@ public class LoginView extends javax.swing.JFrame {
                                 .addComponent(passwdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(checkRecordar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(123, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -92,7 +95,7 @@ public class LoginView extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(passwdContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(jCheckBox1)
+                .addComponent(checkRecordar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -104,6 +107,10 @@ public class LoginView extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void checkRecordarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRecordarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkRecordarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,6 +150,12 @@ public class LoginView extends javax.swing.JFrame {
         return passwdContraseña;
     }
     
+    public JCheckBox getCheckRecordar() {
+    return checkRecordar;
+    }
+
+    
+    
     private void personalizarVista(){
         Util.EstiloUI.aplicarVentana(this);
         
@@ -159,7 +172,7 @@ public class LoginView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox checkRecordar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
