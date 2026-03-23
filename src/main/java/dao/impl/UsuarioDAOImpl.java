@@ -35,7 +35,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     private static final String SQL_UPDATE = "UPDATE usuario SET nombre=?, apellido=?, codigoRolFK=?, telefono=?, email=?, password=?, intentos=?, activo=? WHERE codigoUsuario=?";
     
     // SQL para borrar un usuario
-    private static final String SQL_DELETE = "DELETE FROM usuario WHERE codigoUsuario=?";
+    private static final String SQL_DELETE = "UPDATE usuario SET activo=0 WHERE codigoUsuario=?";
     
     // SQL para buscar un usuario por su clave primaria (ID)
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM usuario WHERE codigoUsuario=?";
@@ -45,10 +45,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     
     // SQL IMPORTANTE: Para el Login. Busca un usuario que coincida en email, contraseña y que esté ACTIVO (1).
     private static final String SQL_LOGIN = "SELECT * FROM usuario WHERE email=? AND password=? AND activo=1";
-
+    
+    // SQL para seleccionar los usuarios activos
+    private static final String SQL_SELECT_ACTIVOS = "SELECT * FROM usuario WHERE activo=1";
+    
+    // SQL para seleccionar los usuarios de tipo operario
+    private static final String SQL_SELECT_OPERARIOS = "SELECT * FROM usuario WHERE codigoRolFK=2 AND activo=1";
+    
+    // SQL para seleccionar los usuarios de tipo mecanico
+    private static final String SQL_SELECT_MECANICOS = "SELECT * FROM usuario WHERE codigoRolFK=3 AND activo=1";
+    
     /**
      * MÉTODO INSERTAR
      * Recibe un objeto Usuario y lo guarda en la base de datos.
+     * @param u
      */
     @Override
     public void insertar(Usuario u) {
@@ -81,6 +91,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     /**
      * MÉTODO ACTUALIZAR
      * Modifica los datos de un usuario que ya existe.
+     * @param u
      */
     @Override
     public void actualizar(Usuario u) {
@@ -111,6 +122,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     /**
      * MÉTODO ELIMINAR
      * Borra un usuario sabiendo su ID.
+     * @param id
      */
     @Override
     public void eliminar(int id) {
@@ -119,16 +131,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             ps.setInt(1, id); // Ponemos el ID en el hueco del WHERE
             ps.executeUpdate(); // Ejecutamos el borrado
-            System.out.println("Usuario eliminado (ID: " + id + ")");
 
         } catch (SQLException e) {
-            System.err.println("Error al eliminar usuario: " + e.getMessage());
+            System.err.println("Error al desactivar usuario: " + e.getMessage());
         }
     }
 
     /**
      * MÉTODO BUSCAR POR ID
      * Devuelve un Optional (una cajita que puede tener un Usuario o estar vacía).
+     * @param id
+     * @return 
      */
     @Override
     public Optional<Usuario> buscarPorId(int id) {
@@ -160,6 +173,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     /**
      * MÉTODO LISTAR
      * Devuelve una lista con TODOS los usuarios.
+     * @return 
      */
     @Override
     public List<Usuario> listar() {
@@ -184,6 +198,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     /**
      * MÉTODO LOGIN
      * Este es el que usarás en tu pantalla de acceso.
+     * @param email
+     * @param password
+     * @return 
      */
     @Override
     public Optional<Usuario> login(String email, String password) {
@@ -230,5 +247,66 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         u.setUltimoAcceso(rs.getTimestamp("ultimoAcceso"));
         u.setActivo(rs.getBoolean("activo"));
         return u;
+    }
+
+    /**
+     * Método para listar los usuarios que están activos
+     * @return 
+     */
+    @Override
+    public List<Usuario> listarActivos() {
+        List<Usuario> lista = new ArrayList<>();
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVOS);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapResultSetToUsuario(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error listando usuarios activos: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
+    @Override
+    public List<Usuario> listarOperarios() {
+        List<Usuario> lista = new ArrayList<>();
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(SQL_SELECT_OPERARIOS);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapResultSetToUsuario(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error listando operarios: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
+    @Override
+    public List<Usuario> listarMecanicos() {
+        List<Usuario> lista = new ArrayList<>();
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(SQL_SELECT_MECANICOS);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapResultSetToUsuario(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error listando mecánicos: " + e.getMessage());
+        }
+
+        return lista;
     }
 }

@@ -17,6 +17,7 @@ public class VistaAdmin extends javax.swing.JFrame {
      */
     public VistaAdmin() {
         initComponents();
+        personalizarVista();
     }
 
     /**
@@ -29,12 +30,12 @@ public class VistaAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
-        jLabel1 = new javax.swing.JLabel();
+        lblBienvenida = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        btnPerfil = new javax.swing.JMenuItem();
+        btnSalir = new javax.swing.JMenuItem();
+        btnCerrarSesion = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btnAveria = new javax.swing.JMenuItem();
         btnUsuario = new javax.swing.JMenuItem();
@@ -44,18 +45,18 @@ public class VistaAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("¡Bienvenido, ...!");
+        lblBienvenida.setText("¡Bienvenido, ...!");
 
         jMenu3.setText("Sesión");
 
-        jMenuItem1.setText("Perfil");
-        jMenu3.add(jMenuItem1);
+        btnPerfil.setText("Perfil");
+        jMenu3.add(btnPerfil);
 
-        jMenuItem3.setText("Salir ");
-        jMenu3.add(jMenuItem3);
+        btnSalir.setText("Salir ");
+        jMenu3.add(btnSalir);
 
-        jMenuItem2.setText("Cerrar sesión");
-        jMenu3.add(jMenuItem2);
+        btnCerrarSesion.setText("Cerrar sesión");
+        jMenu3.add(btnCerrarSesion);
 
         jMenuBar1.add(jMenu3);
 
@@ -84,16 +85,16 @@ public class VistaAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jLabel1)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGap(128, 128, 128)
+                .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(264, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(lblBienvenida)
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,22 +102,16 @@ public class VistaAdmin extends javax.swing.JFrame {
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         // 1. Crear la vista
-    UsuariosView viewUsuarios = new UsuariosView();
-    
-    // 2. Crear el DAO (ya lo tienes hecho)
-    dao.UsuarioDAO daoUsuario = new dao.impl.UsuarioDAOImpl();
-    
-    // 3. Aquí deberíamos conectar un CONTROLADOR. 
-    // Como paso rápido (si no vas a crear la clase UsuariosController aparte), 
-    // puedes cargar la lista directamente aquí:
-    
-    viewUsuarios.llenarTabla(daoUsuario.listar());
-    
-    // HACER VISIBLE LA VENTANA
-    viewUsuarios.setVisible(true);
-    
-    // (Opcional) Si quieres que la ventana sea "modal" (que no deje tocar la de atrás),
-    // deberías haber creado UsuariosView como JDialog en vez de JFrame.
+        UsuariosView viewUsuarios = new UsuariosView();
+
+        // 2. Crear el DAO (ya lo tienes hecho)
+        dao.UsuarioDAO daoUsuario = new dao.impl.UsuarioDAOImpl();
+
+        // 3. Aquí deberíamos conectar un CONTROLADOR. 
+        // Como paso rápido (si no vas a crear la clase UsuariosController aparte), 
+        // puedes cargar la lista directamente aquí:
+
+        viewUsuarios.llenarTabla(daoUsuario.listar());
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     /**
@@ -155,19 +150,55 @@ public class VistaAdmin extends javax.swing.JFrame {
     
     public void esMenuMaquinas(java.awt.event.ActionListener l){
         btnMaquina.addActionListener(l);
+    }
+    
+    public void esMenuPerfil(java.awt.event.ActionListener l){
+        btnPerfil.addActionListener(l);
+    }
+    
+    public void setCerrarSesionListener(java.awt.event.ActionListener l){
+        btnCerrarSesion.addActionListener(l);
+    }
+    
+    public void setSalirListener(java.awt.event.ActionListener l){
+        btnSalir.addActionListener(l);
+    }
+    
+    private void personalizarVista(){
+        Util.EstiloUI.aplicarVentana(this);
+        
+        Util.EstiloUI.aplicarMenuBar(jMenuBar1);
+        Util.EstiloUI.aplicarMenu(jMenu3);
+        Util.EstiloUI.aplicarMenu(jMenu2);
+        
+        Util.EstiloUI.aplicarTituloDashboard(lblBienvenida);
+        
+        Util.EstiloUI.aplicarMenuItem(btnAveria);
+        Util.EstiloUI.aplicarMenuItem(btnUsuario);
+        Util.EstiloUI.aplicarMenuItem(btnMaquina);
+        Util.EstiloUI.aplicarMenuItem(btnPerfil);
+        Util.EstiloUI.aplicarMenuItem(btnSalir);
+       
+        Util.EstiloUI.aplicarBotonCerrarSesion(btnCerrarSesion);
+        
+    }
+    
+    // Método para mostrar el nombre del usuario que inicie sesión
+    public void mostrarUsuario(String nombre) {
+        lblBienvenida.setText("Bienvenido, " + nombre);
     } 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAveria;
+    private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JMenuItem btnMaquina;
+    private javax.swing.JMenuItem btnPerfil;
+    private javax.swing.JMenuItem btnSalir;
     private javax.swing.JMenuItem btnUsuario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JLabel lblBienvenida;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,61 +1,70 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import dao.*;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
+import modelo.Usuario;
 import vista.*;
 
-/**
- *
- * @author Navarro
- * 
- * Controlador de navegación principal.
- * Escucha las opciones del menú de VistaAdmin para abrir nuevas ventanas.
- */
 public class AdminControlador {
-    // Llamamos a las clases
+
     private VistaAdmin vistaAd;
     private UsuarioDAO usuarioD;
     private AveriaDAO averiaD;
-    
-    // Constructor
-    public AdminControlador(VistaAdmin vistaAd, UsuarioDAO usuarioD, AveriaDAO averiaD){
+    private MaquinariaDAO maquinariaD;
+    private Usuario usuarioActual;
+
+    public AdminControlador(VistaAdmin vistaAd, Usuario usuarioActual){
         this.vistaAd = vistaAd;
-        this.usuarioD = usuarioD;
-        this.averiaD = averiaD;
-        
-        // Asignamos las funciones a los botones del menú de gestión
+        this.usuarioD = new UsuarioDAOImpl();
+        this.averiaD = new AveriaDAOImpl();
+        this.maquinariaD = new MaquinariaDAOImpl();
+        this.usuarioActual = usuarioActual;
+
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
         this.vistaAd.esMenuAverias(e -> abrirAverias());
+        this.vistaAd.esMenuMaquinas(e -> abrirMaquinas());
+        this.vistaAd.esMenuPerfil(e -> abrirPerfil());
+        this.vistaAd.setCerrarSesionListener(e -> cerrarSesion());
+        this.vistaAd.setSalirListener(e -> salirAplicacion());
     }
-    
-    // Instancia la vista de usuarios, le inyecta su controlador y la muestra.
+
     private void abrirUsuarios(){
         UsuariosView usuarioV = new UsuariosView();
-        
-        // Creamos su controlador y le pasamos la visata y el DAO
-        new UsuarioControlador(usuarioV, usuarioD);
-        
-        // Hacemos visible la vista usuario
+        new UsuarioControlador(usuarioV, usuarioActual);
         usuarioV.setVisible(true);
-        
-        // Cerramos la vistaAdmin, cuando se abra la vista usuario
         vistaAd.dispose();
     }
-    
-    // Instancia la vista de averías, le inyecta su controlador y la muestra.
+
     private void abrirAverias(){
         AveriasView averiaV = new AveriasView();
-        
-        // Creamos su controlador y le pasamos la vista y el DAO
-        new AveriaControlador(averiaV, averiaD);
-        
-        // Hacemos visible la vista averia
+        new AveriaControlador(averiaV, usuarioActual);
         averiaV.setVisible(true);
-        
-        // Cerramos vistaAdmin, cuando se abra la vista averia
         vistaAd.dispose();
+    }
+
+    private void abrirMaquinas(){
+        VistaMaquinas maquinaV = new VistaMaquinas();
+        new MaquinaControlador(maquinaV, usuarioActual);
+        maquinaV.setVisible(true);
+        vistaAd.dispose();
+    }
+
+    private void abrirPerfil(){
+        VistaPerfil perfilV = new VistaPerfil();
+        perfilV.setVisible(true);
+        vistaAd.dispose();
+    }
+
+    private void cerrarSesion() {
+        LoginView login = new LoginView();
+        new LoginControlador(login, usuarioActual);
+        login.setVisible(true);
+        vistaAd.dispose();
+    }
+
+    private void salirAplicacion() {
+        System.exit(0);
     }
 }

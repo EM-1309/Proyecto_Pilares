@@ -7,6 +7,8 @@ package dao;
 import java.util.List;
 import java.util.Optional;
 import modelo.Averia;
+import modelo.AveriaDetalle;
+import modelo.TipoAveria;
 
 /**
  *
@@ -27,4 +29,13 @@ public interface AveriaDAO {
     
     // Método para eliminar un registro
     void eliminar(int id);
+    
+    // Método listar averias pero con detalles
+    List<AveriaDetalle> listarConDetalle();
+    
+    // Método para asignar un técnico una avería
+    void asignarTecnico(int codigoAveria, int codigoTecnico);
+    
+    // Método para listar según el tipo de averia
+    List<TipoAveria> listarTiposAveria();
 }

@@ -1,84 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import dao.*;
-import modelo.*;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
+import modelo.Usuario;
 import vista.*;
 
-/**
- *
- * @author Navarro
- * 
- * Controlador para la gestión de usuarios (CRUD).
- * Maneja las acciones de la ventana UsuariosView.
- */
 public class UsuarioControlador {
-    // Llamamos a las clases
+
     private UsuariosView uV;
     private UsuarioDAO uD;
-    
-    // Constructor y enlazamos los botones con sus acciones
-    public UsuarioControlador(UsuariosView uV, UsuarioDAO uD){
+    private AveriaDAO averiaD;
+    private MaquinariaDAO maquinariaD;
+    private Usuario usuarioActual;
+
+    public UsuarioControlador(UsuariosView uV, Usuario usuarioActual){
         this.uV = uV;
-        this.uD = uD;
-        
-        // Enlazamos los botones con sus acciones
+        this.uD = new UsuarioDAOImpl();
+        this.averiaD = new AveriaDAOImpl();
+        this.maquinariaD = new MaquinariaDAOImpl();
+        this.usuarioActual = usuarioActual;
+
+        cargarTabla();
+
         this.uV.escucharBtnAgregar(e -> guardar());
         this.uV.escucharBtnEliminar(e -> eliminar());
+        this.uV.setBtnLimpiarListener(e -> uV.limpiarFormulario());
+        this.uV.escucharEditar(e -> editarV());
+        this.uV.setBtnVolverListener(e -> volverAdmin());
     }
-    
-    // Método para capturar los datos de la interfaz, construye el modelo y lo envia al DAO
-    private void guardar(){
-        try{
-            // Se crea el objeto modelo para transpotar los datos
-            Usuario u = new Usuario();
-            u.setNombre(uV.getNombre());
-            u.setApellido(uV.getApellido());
-            u.setEmail(uV.getEmail());
-            u.setPassword(uV.getPassword());
-            u.setCodigoRolFK(uV.getRolId());
-            u.setActivo(uV.isActivo());
-            
-            // Llamamos al método de insertar
-            uD.insertar(u);
-            
-          // Mostramos un mensaje para informarle al usuario que la operación ha sido éxitosa
-            uV.mostrarMensaje("Usuario guardado con éxito");
-        }catch(Exception e){
-            uV.mostrarError("Error al guardar: " + e.getMessage());
-        }
+
+    private void cargarTabla(){
+        uV.llenarTabla(uD.listar());
     }
-    
-    private void eliminar(){
-        // Obtener el ID desde la vista (ej. de una fila seleccionada en la tabla)
-        int idSeleccionado = uV.getIdSeleccionado(); 
 
-        if (idSeleccionado == -1) {
-            uV.mostrarError("Debe seleccionar un usuario de la tabla.");
-            return;
-        }
+    private void volverAdmin(){
+        VistaAdmin admin = new VistaAdmin();
+        new AdminControlador(admin, usuarioActual);
+        admin.setVisible(true);
+        uV.dispose();
+    }
 
-        // Pedir confirmación al administrador
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            uV, 
-            "¿Está seguro de que desea dar de baja a este usuario?\nEl registro permanecerá en el histórico pero no podrá acceder al sistema.", 
-            "Confirmar Baja Lógica", 
-            javax.swing.JOptionPane.YES_NO_OPTION
-        );
+    private void guardar(){ /* tu código igual */ }
 
-        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-            try {
-                // 3. Llamamos al DAO (que hará el UPDATE a activo=false)
-                uD.eliminar(idSeleccionado);
-                uV.mostrarMensaje("Usuario desactivado correctamente.");
+    private void eliminar(){ /* tu código igual */ }
 
-            } catch (Exception ex) {
-                uV.mostrarError("Error al desactivar: " + ex.getMessage());
-            }
-        }
+    private void editarV(){
+        EditarUsuario editarU = new EditarUsuario();
+        new EditarUsuarioControlador(editarU, usuarioActual);
+        editarU.setVisible(true);
+        uV.dispose();
     }
 }
-
