@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
-import dao.MaquinariaDAO;
+import dao.*;
+import dao.impl.AveriaDAOImpl;
 import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import modelo.Maquinaria;
-import vista.VistaEditar;
-import vista.VistaMaquinas;
+import modelo.Usuario;
+import vista.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +15,17 @@ public class EditarMaquina {
 
     private VistaEditar vista;
     private MaquinariaDAO dao;
+    private UsuarioDAO uD;
+    private AveriaDAO aD;
+    private Usuario usuarioActual;
     private int idMaquina;
 
-    public EditarMaquina(VistaEditar vista, MaquinariaDAO dao, int idMaquina) {
-
+    public EditarMaquina(VistaEditar vista, Usuario usuarioActual, int idMaquina) {
         this.vista = vista;
-        this.dao = dao;
+        this.dao = new MaquinariaDAOImpl();
+        this.uD = new UsuarioDAOImpl();
+        this.aD = new AveriaDAOImpl();
+        this.usuarioActual = usuarioActual;
         this.idMaquina = idMaquina;
 
         cargarDatos();
@@ -32,56 +35,41 @@ public class EditarMaquina {
     }
 
     private void cargarDatos() {
-
         dao.buscarPorId(idMaquina).ifPresent(m -> {
-
             vista.setTxtNombre(m.getNombre());
             vista.setTxtCodigo(String.valueOf(m.getCodigoMaquinaria()));
-
         });
-
     }
 
     class GuardarListener implements ActionListener {
-
         @Override
-    public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String nombre = vista.getTxtNombre();
 
-        try {
+                Maquinaria m = dao.buscarPorId(idMaquina).orElse(new Maquinaria());
+                m.setNombre(nombre);
 
-            String nombre = vista.getTxtNombre();
+                dao.actualizar(m);
 
-            //  Obtener la máquina original
-            Maquinaria m = dao.buscarPorId(idMaquina).orElse(new Maquinaria());
+                vista.mostrarMensaje("Máquina actualizada correctamente");
 
-            //  Modificar solo lo necesario
-            m.setNombre(nombre);
+                volver();
 
-            dao.actualizar(m);
-
-            vista.mostrarMensaje("Máquina actualizada correctamente");
-
-            volver();
-
-        } catch (Exception ex) {
-
-            vista.mostrarError("Error al actualizar la máquina");
-            ex.printStackTrace();
-
+            } catch (Exception ex) {
+                vista.mostrarError("Error al actualizar la máquina");
+                ex.printStackTrace();
+            }
         }
-
     }
-}
 
     private void volver() {
-
         VistaMaquinas vistaMaquinas = new VistaMaquinas();
-        MaquinariaDAO daoM = new MaquinariaDAOImpl();
 
-        new MaquinaControlador(vistaMaquinas, daoM);
+        // 👇 USAR LOS MISMOS OBJETOS (CLAVE)
+        new MaquinaControlador(vistaMaquinas, usuarioActual);
 
         vistaMaquinas.setVisible(true);
         vista.dispose();
-
     }
 }

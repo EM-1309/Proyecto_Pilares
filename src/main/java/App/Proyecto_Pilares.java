@@ -7,6 +7,7 @@ import dao.UsuarioDAO;
 import dao.impl.AveriaDAOImpl;
 import dao.impl.MaquinariaDAOImpl;
 import dao.impl.UsuarioDAOImpl;
+import modelo.Usuario;
 import vista.LoginView;
 
 
@@ -17,12 +18,9 @@ public class Proyecto_Pilares {
     public static void main(String[] args) {
       javax.swing.SwingUtilities.invokeLater(() -> {
             LoginView loginView = new LoginView();
+            Usuario usuarioActual = new Usuario();
 
-            UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-            AveriaDAO averiaDAO = new AveriaDAOImpl();
-            MaquinariaDAO maquinariaDAO = new MaquinariaDAOImpl();
-
-            new LoginControlador(loginView, usuarioDAO, averiaDAO, maquinariaDAO);
+            new LoginControlador(loginView,usuarioActual);
 
             loginView.setLocationRelativeTo(null);
             loginView.setVisible(true);

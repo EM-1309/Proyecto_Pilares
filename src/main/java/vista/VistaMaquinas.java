@@ -6,10 +6,13 @@ package vista;
 
 import controlador.AgregarMaquina;
 import controlador.MaquinaControlador;
+import dao.AveriaDAO;
 import dao.MaquinariaDAO;
+import dao.UsuarioDAO;
 import dao.impl.MaquinariaDAOImpl;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import modelo.Usuario;
 
 /**
  *
@@ -26,6 +29,8 @@ public class VistaMaquinas extends javax.swing.JFrame {
         initComponents();
         setTitle("Gestión de Máquinas");
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        ((javax.swing.JComponent) getContentPane()).setBorder(
+        javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         personalizarVista();
         
         getContentPane().removeAll(); // limpiar layout de NetBeans
@@ -264,7 +269,9 @@ public class VistaMaquinas extends javax.swing.JFrame {
     java.awt.EventQueue.invokeLater(() -> {
         VistaMaquinas vista = new VistaMaquinas();
         MaquinariaDAO dao = new MaquinariaDAOImpl();
-        new MaquinaControlador(vista, dao);
+        Usuario usuarioActual = new Usuario();
+        
+        new MaquinaControlador(vista, usuarioActual);
 
         vista.setVisible(true);
     });

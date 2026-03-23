@@ -1,64 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import dao.*;
+import dao.impl.AveriaDAOImpl;
+import dao.impl.MaquinariaDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import modelo.Averia;
+import modelo.Usuario;
 import vista.*;
 
-/**
- *
- * @author Navarro
- */
 public class AveriaControlador {
+
     private AveriasView aV;
     private AveriaDAO aD;
     private UsuarioDAO uD;
     private MaquinariaDAO mD;
-    
-    // Constructor
-    public AveriaControlador(AveriasView aV, AveriaDAO aD){
+    private Usuario usuarioActual;
+
+    public AveriaControlador(AveriasView aV, Usuario usuarioActual){
         this.aV = aV;
-        this.aD = aD;
-        
-        // Enlazamos los botones con sus acciones
+        this.aD = new AveriaDAOImpl();
+        this.uD = new UsuarioDAOImpl();
+        this.mD = new MaquinariaDAOImpl();
+        this.usuarioActual = usuarioActual;
+
         this.aV.escucharBtnReportar(e -> reportarFalla());
         this.aV.setBtnVolverListener(e -> volverAdmin());
     }
-    
-    // Método para reportar avería
+
     private void reportarFalla(){
         try{
-            if(aV.getDescInic().isEmpty()){
-                aV.mostrarError("La descripción es obligatoria");
-                return;
-            }
-            
             Averia a = new Averia();
             a.setDescInicAveria(aV.getDescInic());
             a.setMaquinariaFK(aV.getMaquinariaID());
             a.setUsuarioReportaFK(aV.getOperarioID());
             a.setTipoAveriaFK(aV.getTipoAveriaID());
-            
+
             aD.insertar(a);
-            aV.mostrarMensaje("Averia reportada correctamente");
-        }catch(NumberFormatException e){
-            aV.mostrarError("Los IDs deben ser números válidos");
+            aV.mostrarMensaje("Avería reportada correctamente");
         }catch(Exception e){
             aV.mostrarError("Error: " + e.getMessage());
         }
     }
-    
-    // Método para volver el menú "Principal"
+
     private void volverAdmin(){
         VistaAdmin admin = new VistaAdmin();
-        
-        new AdminControlador(admin, uD, aD, mD);
-        
+        new AdminControlador(admin, usuarioActual);
         admin.setVisible(true);
-        
         aV.dispose();
     }
 }
