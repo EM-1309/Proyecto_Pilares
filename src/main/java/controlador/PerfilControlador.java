@@ -60,10 +60,8 @@ public class PerfilControlador {
 
     private void volverAdmin() {
             VistaAdmin admin = new VistaAdmin();
-
             new AdminControlador(admin, usuarioActual);
-
-            admin.setVisible(true);
             vistaP.dispose();
+            admin.setVisible(true);
     }
 }
