@@ -26,7 +26,7 @@ import javax.swing.table.JTableHeader;
  */
 public class EstiloUI {
     // Colores
-    public static final Color COLOR_FONDO = new Color(245, 247, 250);
+    public static final Color COLOR_FONDO = new Color(230, 240, 255); // azul suave
     public static final Color COLOR_PANEL = Color.WHITE;
     public static final Color COLOR_PRIMARIO = new Color(33, 74, 128);
     public static final Color COLOR_SECUNDARIO = new Color(52, 152, 219);
@@ -34,6 +34,65 @@ public class EstiloUI {
     public static final Color COLOR_PELIGRO = new Color(231, 76, 60);
     public static final Color COLOR_TEXTO = new Color(44, 62, 80);
 
+    
+    public static void activarEscaladoDinamico(javax.swing.JFrame frame) {
+
+    Dimension base = frame.getSize(); // tamaño inicial
+
+    frame.addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+
+            Dimension nueva = frame.getSize();
+
+            float factorX = (float) nueva.width / base.width;
+            float factorY = (float) nueva.height / base.height;
+
+            float factor = Math.min(factorX, factorY);
+
+            escalarComponentes(frame.getContentPane(), factor);
+        }
+    });
+}
+    
+    public static void aplicarMargenResponsivo(JPanel panel) {
+    panel.addComponentListener(new java.awt.event.ComponentAdapter() {
+        public void componentResized(java.awt.event.ComponentEvent evt) {
+            int w = panel.getWidth();
+            int h = panel.getHeight();
+
+            int margenX = (int)(w * 0.2); 
+            int margenY = (int)(h * 0.1); 
+
+            panel.setBorder(new javax.swing.border.EmptyBorder(
+                margenY, margenX, margenY, margenX
+            ));
+        }
+    });
+}
+    
+    public static void escalarComponentes(java.awt.Container contenedor, float factor) {
+    for (java.awt.Component c : contenedor.getComponents()) {
+
+        if (c instanceof javax.swing.JComponent jc) {
+
+            Object original = jc.getClientProperty("fuenteOriginal");
+
+            if (original == null) {
+                jc.putClientProperty("fuenteOriginal", jc.getFont());
+                original = jc.getFont();
+            }
+
+            Font baseFont = (Font) original;
+            jc.setFont(baseFont.deriveFont(baseFont.getSize() * factor));
+        }
+
+        if (c instanceof java.awt.Container child) {
+            escalarComponentes(child, factor);
+        }
+    }
+}
+    
     // Tipo de letra
     public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 22);
     public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 16);

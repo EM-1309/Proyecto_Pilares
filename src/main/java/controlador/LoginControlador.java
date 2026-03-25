@@ -99,10 +99,7 @@ public class LoginControlador {
 
                 if (u.getCodigoRolFK() == 1) {
                     VistaAdmin admin = new VistaAdmin();
-                    admin.mostrarUsuario(u.getNombre());
-
-                    new AdminControlador(admin, u);
-
+                    new AdminControlador(admin, u); // 🔥 SOLO ESTO
                     admin.setVisible(true);
 
                 } else if (u.getCodigoRolFK() == 2) {

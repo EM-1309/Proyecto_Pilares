@@ -41,10 +41,10 @@ public class VistaMaquinas extends javax.swing.JFrame {
 
         panelBotones.add(btnAgregar);
         panelBotones.add(btnEditar);
-        panelBotones.add(btnEliminar);
         panelBotones.add(btnRefrescarLista);
         panelBotones.add(btnMaquinaria);
         panelBotones.add(btnEstados);
+        panelBotones.add(btnEliminar);
         
         add(panelBotones, java.awt.BorderLayout.WEST);
         add(jScrollPane1, java.awt.BorderLayout.CENTER);

@@ -30,7 +30,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
-        lblBienvenida = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         btnPerfil = new javax.swing.JMenuItem();
@@ -45,7 +45,7 @@ public class VistaAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblBienvenida.setText("¡Bienvenido, ...!");
+        jLabel1.setText("¡Bienvenido, ...!");
 
         jMenu3.setText("Sesión");
 
@@ -86,14 +86,14 @@ public class VistaAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(128, 128, 128)
-                .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(lblBienvenida)
+                .addComponent(jLabel1)
                 .addContainerGap(219, Short.MAX_VALUE))
         );
 
@@ -139,6 +139,10 @@ public class VistaAdmin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new VistaAdmin().setVisible(true));
     }
     
+    public void setNombreUsuario(String nombre) {
+    jLabel1.setText("Bienvenido, " + nombre);
+}
+    
     // Métodos puente para los items del menú de Gestión
     public void esMenuUsuarios(java.awt.event.ActionListener l){
         btnUsuario.addActionListener(l);
@@ -171,7 +175,7 @@ public class VistaAdmin extends javax.swing.JFrame {
         Util.EstiloUI.aplicarMenu(jMenu3);
         Util.EstiloUI.aplicarMenu(jMenu2);
         
-        Util.EstiloUI.aplicarTituloDashboard(lblBienvenida);
+        Util.EstiloUI.aplicarTituloDashboard(jLabel1);
         
         Util.EstiloUI.aplicarMenuItem(btnAveria);
         Util.EstiloUI.aplicarMenuItem(btnUsuario);
@@ -185,7 +189,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     
     // Método para mostrar el nombre del usuario que inicie sesión
     public void mostrarUsuario(String nombre) {
-        lblBienvenida.setText("Bienvenido, " + nombre);
+        jLabel1.setText("Bienvenido, " + nombre);
     } 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -195,10 +199,10 @@ public class VistaAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnPerfil;
     private javax.swing.JMenuItem btnSalir;
     private javax.swing.JMenuItem btnUsuario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JLabel lblBienvenida;
     // End of variables declaration//GEN-END:variables
 }
