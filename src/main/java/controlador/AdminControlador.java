@@ -53,6 +53,7 @@ public class AdminControlador {
 
     private void abrirPerfil(){
         VistaPerfil perfilV = new VistaPerfil();
+        new PerfilControlador(perfilV, usuarioActual);
         perfilV.setVisible(true);
         vistaAd.dispose();
     }

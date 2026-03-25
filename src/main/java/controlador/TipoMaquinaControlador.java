@@ -6,7 +6,9 @@ package controlador;
 
 import dao.TipoMaquinaDAO;
 import dao.impl.TipoMaquinaDAOImpl;
+import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.TipoMaquinaria;
 import modelo.Usuario;
 import vista.VistaAgregarTipo;
 import vista.VistaMaquinas;
@@ -31,7 +33,30 @@ public class TipoMaquinaControlador {
         this.vista.getAgregar().addActionListener(e -> abrirVista());
         this.vista.getEliminar().addActionListener(e -> eliminarTipo());
         this.vista.getVolver().addActionListener(e -> volverM());
+        this.vistaA.getGuardar().addActionListener(e -> guardar());
+        
         refrescarTabla();
+    }
+    
+    // Método para guardar un tipo de maquina
+    private void guardar(){
+        String descripcion = vistaA.getDescripcion();
+        
+        if(descripcion.isEmpty()){
+            vistaA.mostrarError("La descripción no puede estar vacía");
+                    return;
+        }
+        
+        TipoMaquinaria tm = new TipoMaquinaria();
+        tm.setDescripcionMaq(descripcion);
+        
+        if(tipoD.insertar(tm)){
+            vistaA.dispose();
+            vista.mostrarMensaje("Estado agregado correctamente");
+            refrescarTabla();
+        }else{
+            vistaA.mostrarError("Error al guardar el estado");  
+        }
     }
     
     private void eliminarTipo(){
@@ -68,6 +93,7 @@ public class TipoMaquinaControlador {
     }
     
     private void refrescarTabla() {
-        vista.llenarTabla(tipoD.listar());
+        List<TipoMaquinaria> lista = tipoD.listar();
+        vista.llenarTabla(lista);
     }
 }

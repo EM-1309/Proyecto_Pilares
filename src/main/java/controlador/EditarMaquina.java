@@ -20,13 +20,12 @@ public class EditarMaquina {
     private Usuario usuarioActual;
     private int idMaquina;
 
-    public EditarMaquina(VistaEditar vista, Usuario usuarioActual, int idMaquina) {
+    public EditarMaquina(VistaEditar vista, Usuario usuarioActual) {
         this.vista = vista;
         this.dao = new MaquinariaDAOImpl();
         this.uD = new UsuarioDAOImpl();
         this.aD = new AveriaDAOImpl();
         this.usuarioActual = usuarioActual;
-        this.idMaquina = idMaquina;
 
         cargarDatos();
 
@@ -65,11 +64,8 @@ public class EditarMaquina {
 
     private void volver() {
         VistaMaquinas vistaMaquinas = new VistaMaquinas();
-
-        // 👇 USAR LOS MISMOS OBJETOS (CLAVE)
         new MaquinaControlador(vistaMaquinas, usuarioActual);
-
-        vistaMaquinas.setVisible(true);
         vista.dispose();
+        vistaMaquinas.setVisible(true); 
     }
 }

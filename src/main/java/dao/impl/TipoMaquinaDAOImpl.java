@@ -25,7 +25,7 @@ public class TipoMaquinaDAOImpl implements TipoMaquinaDAO {
     
     @Override
     public boolean insertar(TipoMaquinaria tipo) {
-        String sql = "INSERT INTO estados (descripcionEstado) VALUES (?)";
+        String sql = "INSERT INTO tipo_maquinaria (descripcionMaq) VALUES (?)";
         try {
             con = Conexion.getConexion();
             ps = con.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class TipoMaquinaDAOImpl implements TipoMaquinaDAO {
     @Override
     public List<TipoMaquinaria> listar() {
         List<TipoMaquinaria> lista = new ArrayList<>();
-        String sql = "SELECT * FROM estados";
+        String sql = "SELECT * FROM tipo_maquinaria";
         try {
             con = Conexion.getConexion();
             ps = con.prepareStatement(sql);

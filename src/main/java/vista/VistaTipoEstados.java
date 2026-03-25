@@ -33,7 +33,6 @@ public class VistaTipoEstados extends javax.swing.JFrame {
                 return false;
             }   
         });
-        
     }
 
     /**

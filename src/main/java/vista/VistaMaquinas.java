@@ -271,7 +271,6 @@ public class VistaMaquinas extends javax.swing.JFrame {
 
     java.awt.EventQueue.invokeLater(() -> {
         VistaMaquinas vista = new VistaMaquinas();
-        MaquinariaDAO dao = new MaquinariaDAOImpl();
         Usuario usuarioActual = new Usuario();
         
         new MaquinaControlador(vista, usuarioActual);
@@ -300,6 +299,14 @@ public class VistaMaquinas extends javax.swing.JFrame {
     
     public void setBtnVolverListener(java.awt.event.ActionListener listener) {
         btnVolver.addActionListener(listener);
+    }
+    
+    public void setBtnEstados(java.awt.event.ActionListener listener){
+        btnEstados.addActionListener(listener);
+    }
+    
+    public void setBtnMaquinaria(java.awt.event.ActionListener listener){
+        btnMaquinaria.addActionListener(listener);
     }
     
     // Método para obtener columna seleccionada
