@@ -25,35 +25,35 @@ public class EditarAveriasView extends javax.swing.JFrame {
     }
 
     private void aplicarEstilos() {
-    Util.EstiloUI.aplicarVentana(this);
-    Util.EstiloUI.aplicarTabla(jTable1);
-    Util.EstiloUI.aplicarPantallaCompleta(this);
+        Util.EstiloUI.aplicarVentana(this);
+        Util.EstiloUI.aplicarTabla(jTable1);
+        Util.EstiloUI.aplicarPantallaCompleta(this);
 
-    Util.EstiloUI.aplicarBotonPrimario(btnEditar);
-    Util.EstiloUI.aplicarBotonPeligro(btnVolver);
-}
+        Util.EstiloUI.aplicarBotonPrimario(btnEditar);
+        Util.EstiloUI.aplicarBotonPeligro(btnVolver);
+    }
     
     public void setDatosAveria(modelo.Averia a) {
-    txtDescInic.setText(a.getDescInicAveria());
-    txtProcRealizado.setText(a.getProcRealizadoTecnico());
-    txtMaquinariaID.setText(String.valueOf(a.getMaquinariaFK()));
-    txtTipoAveriaID.setText(String.valueOf(a.getTipoAveriaFK()));
-    txtUsuario.setText(String.valueOf(a.getUsuarioReportaFK()));
-    txtTecnicoID.setText(a.getUsuarioTecnicoFK() != null ? String.valueOf(a.getUsuarioTecnicoFK()) : "");
-    txtFechaInicio.setText(String.valueOf(a.getFechaInicioAver()));
-    txtFechaAsig.setText(String.valueOf(a.getFechaAsigTecnico()));
-    txtFechaAcep.setText(String.valueOf(a.getFechaAcepTecnico()));
-    txtFechaFin.setText(String.valueOf(a.getFechaFinalizTecnico()));
-}
+        txtDescInic.setText(a.getDescInicAveria());
+        txtProcRealizado.setText(a.getProcRealizadoTecnico());
+        txtMaquinariaID.setText(String.valueOf(a.getMaquinariaFK()));
+        txtTipoAveriaID.setText(String.valueOf(a.getTipoAveriaFK()));
+        txtUsuario.setText(String.valueOf(a.getUsuarioReportaFK()));
+        txtTecnicoID.setText(a.getUsuarioTecnicoFK() != null ? String.valueOf(a.getUsuarioTecnicoFK()) : "");
+        txtFechaInicio.setText(String.valueOf(a.getFechaInicioAver()));
+        txtFechaAsig.setText(String.valueOf(a.getFechaAsigTecnico()));
+        txtFechaAcep.setText(String.valueOf(a.getFechaAcepTecnico()));
+        txtFechaFin.setText(String.valueOf(a.getFechaFinalizTecnico()));
+    }
     
     public void setTablaListener(javax.swing.event.ListSelectionListener l) {
-    jTable1.getSelectionModel().addListSelectionListener(l);
-}
+        jTable1.getSelectionModel().addListSelectionListener(l);
+    }
 
-    public void setBtnVolverListener(java.awt.event.ActionListener l) {
-    btnVolver.addActionListener(l);
-}
-    
+        public void setBtnVolverListener(java.awt.event.ActionListener l) {
+        btnVolver.addActionListener(l);
+    }
+
     
     
     /**
@@ -98,7 +98,11 @@ public class EditarAveriasView extends javax.swing.JFrame {
 
         jLabel3.setText("ID Máquina:");
 
+        txtMaquinariaID.setEditable(false);
+
         jLabel4.setText("ID Tipo Avería:");
+
+        txtTipoAveriaID.setEditable(false);
 
         jLabel5.setText("ID Usuario:");
 
@@ -293,10 +297,41 @@ public class EditarAveriasView extends javax.swing.JFrame {
     
     public Averia getDatosFormulario() {
         Averia a = new Averia();
+
         a.setDescInicAveria(getDescInic());
         a.setProcRealizadoTecnico(getProcRealizado());
         a.setMaquinariaFK(Integer.parseInt(getMaquinariaID()));
         a.setTipoAveriaFK(Integer.parseInt(getTipoAveriaID()));
+        a.setUsuarioReportaFK(Integer.parseInt(getOperarioID()));
+
+        if (getTecnicoID() != null && !getTecnicoID().isBlank()) {
+            a.setUsuarioTecnicoFK(Integer.parseInt(getTecnicoID()));
+        } else {
+            a.setUsuarioTecnicoFK(null);
+        }
+
+        if (getFechaInicio() != null && !getFechaInicio().isBlank() && !"null".equalsIgnoreCase(getFechaInicio())) {
+            a.setFechaInicioAver(java.sql.Timestamp.valueOf(getFechaInicio()));
+        }
+
+        if (getFechaAsig() != null && !getFechaAsig().isBlank() && !"null".equalsIgnoreCase(getFechaAsig())) {
+            a.setFechaAsigTecnico(java.sql.Timestamp.valueOf(getFechaAsig()));
+        } else {
+            a.setFechaAsigTecnico(null);
+        }
+
+        if (getFechaAcep() != null && !getFechaAcep().isBlank() && !"null".equalsIgnoreCase(getFechaAcep())) {
+            a.setFechaAcepTecnico(java.sql.Timestamp.valueOf(getFechaAcep()));
+        } else {
+            a.setFechaAcepTecnico(null);
+        }
+
+        if (getFechaFin() != null && !getFechaFin().isBlank() && !"null".equalsIgnoreCase(getFechaFin())) {
+            a.setFechaFinalizTecnico(java.sql.Timestamp.valueOf(getFechaFin()));
+        } else {
+            a.setFechaFinalizTecnico(null);
+        }
+
         return a;
     }
     

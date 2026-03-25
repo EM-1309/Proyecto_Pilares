@@ -18,80 +18,91 @@ public class ReportarAveriaView extends javax.swing.JFrame {
     private java.util.List<modelo.Maquinaria> listaMaquinas;
     private java.util.List<modelo.TipoAveria> listaTipos;
     
-// ===================== GETTERS =====================
-
-    public int getMaquinariaID() {
-    return listaMaquinas.get(jComboBox1.getSelectedIndex()).getCodigoMaquinaria();
-}
-
-    public int getTipoAveriaID() {
-    return listaTipos.get(jComboBox2.getSelectedIndex()).getCodigoTipoAveria();
-}
-    
-    public String getDescInic() {
-    return jTextArea1.getText().trim();
-}
-
-
-
-public int getOperarioID() {
-    return 1; // luego puedes poner usuarioActual.getId()
-}
-
-// ===================== LISTENERS =====================
-
-public void escucharBtnReportar(java.awt.event.ActionListener l) {
-    btnReportar.addActionListener(l);
-}
-
-// ⚠️ ESTE NO EXISTÍA → LO QUITAMOS DEL CONTROLADOR
-// public void setBtnVolverListener(...) NO existe
-
-// ===================== MENSAJES =====================
-
-public void mostrarMensaje(String msg) {
-    javax.swing.JOptionPane.showMessageDialog(this, msg);
-}
-
-public void mostrarError(String msg) {
-    javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-}
     /**
      * Creates new form ReportarAveriaView
      */
     public ReportarAveriaView() {
         initComponents();
         setTitle("Reportar Avería");
+        aplicarEstilos();
+    }
+    
+    // ===================== GETTERS =====================
+    public int getMaquinariaID() {
+        return listaMaquinas.get(jComboBox1.getSelectedIndex()).getCodigoMaquinaria();
+    }
+
+        public int getTipoAveriaID() {
+        return listaTipos.get(jComboBox2.getSelectedIndex()).getCodigoTipoAveria();
+    }
+
+        public String getDescInic() {
+        return jTextArea1.getText().trim();
+    }
+
+
+
+    public int getOperarioID() {
+        return 1; // luego puedes poner usuarioActual.getId()
+    }
+
+    // ===================== LISTENERS =====================
+
+    public void escucharBtnReportar(java.awt.event.ActionListener l) {
+        btnReportar.addActionListener(l);
+    }
+
+    // ⚠️ ESTE NO EXISTÍA → LO QUITAMOS DEL CONTROLADOR
+    // public void setBtnVolverListener(...) NO existe
+
+    // ===================== MENSAJES =====================
+
+    public void mostrarMensaje(String msg) {
+        javax.swing.JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public void mostrarError(String msg) {
+        javax.swing.JOptionPane.showMessageDialog(this, msg, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     //METODOS
-    
     private void aplicarEstilos() {
-    Util.EstiloUI.aplicarVentana(this);
-    
+        Util.EstiloUI.aplicarVentana(this);
 
-    Util.EstiloUI.aplicarBotonPrimario(btnReportar);
-    Util.EstiloUI.aplicarBotonPeligro(btnVolver);
-    Util.EstiloUI.aplicarPantallaCompleta(this); 
-}
+
+        Util.EstiloUI.aplicarBotonPrimario(btnReportar);
+        Util.EstiloUI.aplicarBotonPeligro(btnVolver);
+        Util.EstiloUI.aplicarPantallaCompleta(this); 
+    }
     
     public void cargarMaquinas(java.util.List<modelo.Maquinaria> lista) {
-    this.listaMaquinas = lista;
-    jComboBox1.removeAllItems();
-    for (modelo.Maquinaria m : lista) {
-        jComboBox1.addItem(m.getNombre());
+        this.listaMaquinas = lista;
+        jComboBox1.removeAllItems();
+        for (modelo.Maquinaria m : lista) {
+            jComboBox1.addItem(m.getNombre());
+        }
     }
-}
 
-public void cargarTiposAveria(java.util.List<modelo.TipoAveria> lista) {
-    this.listaTipos = lista;
-    jComboBox2.removeAllItems();
-    for (modelo.TipoAveria t : lista) {
-        jComboBox2.addItem(t.getDescripcionTipoAv());
+    public void cargarTiposAveria(java.util.List<modelo.TipoAveria> lista) {
+        this.listaTipos = lista;
+        jComboBox2.removeAllItems();
+        for (modelo.TipoAveria t : lista) {
+            jComboBox2.addItem(t.getDescripcionTipoAv());
+        }
     }
-}
+    
+    public void limpiarFormulario() {
+        if (jComboBox1.getItemCount() > 0) {
+            jComboBox1.setSelectedIndex(0);
+        }
 
-  
+        if (jComboBox2.getItemCount() > 0) {
+            jComboBox2.setSelectedIndex(0);
+        }
+
+        jTextArea1.setText("");
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,9 +126,9 @@ public void cargarTiposAveria(java.util.List<modelo.TipoAveria> lista) {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("ID Maquina:");
+        jLabel1.setText("Máquina:");
 
-        jLabel2.setText("ID Tipo Avería:");
+        jLabel2.setText("Tipo de avería:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Descripción Avería:");
@@ -171,7 +182,7 @@ public void cargarTiposAveria(java.util.List<modelo.TipoAveria> lista) {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                                 .addComponent(jLabel2)))
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
