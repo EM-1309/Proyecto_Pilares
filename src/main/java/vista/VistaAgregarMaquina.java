@@ -17,7 +17,9 @@ public class VistaAgregarMaquina extends javax.swing.JFrame {
      */
     public VistaAgregarMaquina() {
         initComponents();
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>());
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,12 +205,38 @@ public class VistaAgregarMaquina extends javax.swing.JFrame {
     public String getTipoMaquina(){
         return jComboBox1.getSelectedItem().toString();
     }
+    
+    public void setCodigoAutomatico() {
+        jTextField2.setText("Automático");
+    }
 
     public void limpiarFormulario(){
         jTextField1.setText("");
-        jTextField2.setText("");
         txtDescripcion.setText("");
-        jComboBox1.setSelectedIndex(0);
+        if (jComboBox1.getItemCount() > 0) {
+            jComboBox1.setSelectedIndex(0);
+        }
+        setCodigoAutomatico();
+    }
+    
+        public void cargarTiposMaquina(java.util.List<modelo.TipoMaquinaria> tipos) {
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+
+        for (modelo.TipoMaquinaria tipo : tipos) {
+            model.addElement(tipo.getCodigoTipoMaquinaria() + " - " + tipo.getDescripcionMaq());
+        }
+        jComboBox1.setModel(model);
+    }
+    
+    public int getTipoMaquinaSeleccionadoId() {
+        String seleccionado = (String) jComboBox1.getSelectedItem();
+
+        if (seleccionado == null || !seleccionado.contains(" - ")) {
+            return -1;
+        }
+
+        String idTexto = seleccionado.split(" - ")[0].trim();
+        return Integer.parseInt(idTexto);
     }
 
     public void mostrarMensaje(String msg){
