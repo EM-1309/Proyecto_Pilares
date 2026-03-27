@@ -7,14 +7,18 @@ package controlador;
 import modelo.Usuario;
 import vista.ReportarAveriaView;
 
+
 /**
  *
  * @author konatasht
  */
 public class AveriaControladorReportar {
-
-    AveriaControladorReportar(ReportarAveriaView vista, Usuario usuarioActual) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private ReportarAveriaView rA;
+    private Usuario usuarioActual;
+    
+    public AveriaControladorReportar(ReportarAveriaView rA, Usuario usuarioActual){
+        this.rA = rA;
+        this.usuarioActual = usuarioActual;
     }
     
 }
