@@ -64,8 +64,8 @@ public class AveriaControlador {
     private void abrirReportar() {
         ReportarAveriaView vista = new ReportarAveriaView();
         new AveriaControladorReportar(vista, usuarioActual);
-        vista.setVisible(true);
         aV.dispose();
+        vista.setVisible(true);
     }
 
     private void volverAdmin(){

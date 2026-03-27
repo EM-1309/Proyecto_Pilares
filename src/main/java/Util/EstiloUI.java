@@ -4,9 +4,12 @@
  */
 package Util;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,7 +30,7 @@ import javax.swing.table.JTableHeader;
 public class EstiloUI {
     // Colores
     public static final Color COLOR_FONDO = new Color(230, 240, 255); // azul suave
-    public static final Color COLOR_PANEL = Color.WHITE;
+    public static final Color COLOR_PANEL = new Color(200, 200, 200);
     public static final Color COLOR_PRIMARIO = new Color(33, 74, 128);
     public static final Color COLOR_SECUNDARIO = new Color(52, 152, 219);
     public static final Color COLOR_EXITO = new Color(46, 204, 113);
@@ -93,11 +96,49 @@ public class EstiloUI {
     }
 }
     
+    public static void aplicarFondo(JFrame frame, JPanel panelPrincipal) {
+    URL url = EstiloUI.class.getResource("/img/fondo.jpg");
+
+    if (url == null) {
+        System.out.println("No se encontró la imagen");
+        return;
+    }
+
+    ImageIcon icon = new ImageIcon(url);
+    JLabel fondo = new JLabel(icon);
+    fondo.setLayout(null);
+
+    frame.setContentPane(fondo);
+
+    panelPrincipal.setOpaque(true);
+    panelPrincipal.setBackground(COLOR_PANEL);
+
+    fondo.add(panelPrincipal);
+
+    // 🔥 ESCALADO AUTOMÁTICO
+    fondo.addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+            int w = fondo.getWidth();
+            int h = fondo.getHeight();
+
+            int panelW = (int) (w * 0.7); // 40% ancho
+            int panelH = (int) (h * 0.8); // 50% alto
+
+            int x = (w - panelW) / 2; // centrado horizontal
+            int y = (h - panelH) / 2; // centrado vertical
+
+            panelPrincipal.setBounds(x, y, panelW, panelH);
+        }
+    });
+}
+    
     // Tipo de letra
     public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 22);
     public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 16);
     public static final Font FUENTE_NORMAL = new Font("Segoe UI", Font.PLAIN, 14);
     public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 14);
+   
 
     public static void aplicarPantallaCompleta(javax.swing.JFrame frame) {
         frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
@@ -113,6 +154,7 @@ public class EstiloUI {
     public static void aplicarPanel(JPanel panel) {
         panel.setBackground(COLOR_PANEL);
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        panel.setOpaque(true);
     }
 
     // Método para aplicar color y tipo de letra a un label (titulo)
