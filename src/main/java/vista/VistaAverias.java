@@ -29,7 +29,20 @@ public class VistaAverias extends javax.swing.JFrame {
         EstiloUI.aplicarFondo(this, jPanel1); // 👈 SOLO ESTO
         
         
-        
+       jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "ID", "Máquina", "Descripción", "Tipo", "Operario", "Técnico",
+                "F.Inicio", "F.signación", "F.Aceptación", "F.Finalización"
+            }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+       jTable1.setRowHeight(36);
+       jTable1.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 45));
     }
 
     /**
@@ -114,6 +127,37 @@ public class VistaAverias extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(btnVolver)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditar)
+                .addGap(18, 18, 18)
+                .addComponent(btnReportar)
+                .addGap(22, 22, 22))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(223, 223, 223))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolver)
                     .addComponent(btnEditar)
                     .addComponent(btnReportar))
@@ -188,7 +232,6 @@ public class VistaAverias extends javax.swing.JFrame {
     
   private void aplicarEstilos() {
     Util.EstiloUI.aplicarVentana(this);
-    Util.EstiloUI.aplicarTabla(jTable1);
     Util.EstiloUI.aplicarPantallaCompleta(this);
     EstiloUI.aplicarMargenResponsivo((JPanel) this.getContentPane());
 
@@ -216,9 +259,45 @@ public class VistaAverias extends javax.swing.JFrame {
             a.getFechaFinalizTecnico() != null ? a.getFechaFinalizTecnico() : "-"
             
         });
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+        modelo.setRowCount(0);
+
+        for (modelo.Averia a : lista) {
+            modelo.addRow(new Object[]{
+                a.getCodigoAveria(),
+                a.getMaquinariaFK(),
+                a.getDescInicAveria(),
+                a.getTipoAveriaFK(),
+                a.getUsuarioReportaFK(),
+                (a.getUsuarioTecnicoFK() != null && a.getUsuarioTecnicoFK() > 0)
+                    ? a.getUsuarioTecnicoFK()
+                    : "Sin asignar",
+                a.getFechaInicioAver(),
+                a.getFechaAsigTecnico(),
+                a.getFechaAcepTecnico(),
+                a.getFechaFinalizTecnico()
+            });
+        }
+        ajustarColumnasTabla();
     }
-}
   
+    private void ajustarColumnasTabla() {
+          javax.swing.table.TableColumnModel columnas = jTable1.getColumnModel();
+
+          columnas.getColumn(0).setPreferredWidth(70);   // ID
+          columnas.getColumn(1).setPreferredWidth(170);  // Máquina
+          columnas.getColumn(2).setPreferredWidth(220);  // Descripción
+          columnas.getColumn(3).setPreferredWidth(220);   // Tipo
+          columnas.getColumn(4).setPreferredWidth(220);  // Operario
+          columnas.getColumn(5).setPreferredWidth(170);  // Técnico
+          columnas.getColumn(6).setPreferredWidth(220);  // Fecha Inicio
+          columnas.getColumn(7).setPreferredWidth(240);  // Fecha Asignación
+          columnas.getColumn(8).setPreferredWidth(250);  // Fecha Aceptación
+          columnas.getColumn(9).setPreferredWidth(250);  // Fecha Finalización // Fecha Finalización
+    }
+
     public void mostrarMensaje(String mensaje) {
         javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
