@@ -5,46 +5,76 @@
 package vista;
 
 import Util.EstiloUI;
-import javax.swing.JButton;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import modelo.Averia;
 
 /**
  *
- * @author konatasht
+ * @author konstan
  */
 public class VistaAverias extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaAverias.class.getName());
 
-    
-    private java.util.List<modelo.Maquinaria> listaMaquinas;
-    private java.util.List<modelo.TipoAveria> listaTipos;
     /**
-     * Creates new form VistaAverias
+     * Creates new form VistaAverias2
      */
     public VistaAverias() {
         initComponents();
         aplicarEstilos();
         EstiloUI.aplicarPantallaCompleta(this);
-        EstiloUI.aplicarFondo(this, jPanel1); // 👈 SOLO ESTO
+        EstiloUI.aplicarFondo(this, jPanel1);
         
-        
-       jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "ID", "Máquina", "Descripción", "Tipo", "Operario", "Técnico",
-                "F.Inicio", "F.signación", "F.Aceptación", "F.Finalización"
-            }
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
-       jTable1.setRowHeight(36);
-       jTable1.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 45));
     }
 
+    public int getIdSeleccionado() {
+    int fila = jTable1.getSelectedRow();
+    if(fila == -1) return -1;
+    return (int) jTable1.getValueAt(fila, 0);
+}
+    public javax.swing.JButton getReportar() {
+    return btnReportar;
+}
+
+public javax.swing.JButton getActualizar() {
+    return btnEditar;
+}
+
+public javax.swing.JButton getVolver() {
+    return btnVolver;
+}
+    
+    public void llenarTabla(List<Averia> lista) {
+    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+    modelo.setRowCount(0);
+
+    for (Averia a : lista) {
+        Integer tecnico = a.getUsuarioTecnicoFK();
+        modelo.addRow(new Object[]{
+            a.getCodigoAveria(),
+            a.getMaquinariaFK(),
+            a.getDescInicAveria(),
+            a.getTipoAveriaFK(),
+            a.getUsuarioReportaFK(),
+            (a.getUsuarioTecnicoFK() != null && a.getUsuarioTecnicoFK() > 0)
+                ? a.getUsuarioTecnicoFK()
+                : "Sin asignar",
+            a.getFechaInicioAver(),
+            a.getFechaAsigTecnico(),
+            a.getFechaAcepTecnico(),
+            a.getFechaFinalizTecnico()
+        });
+    }
+}
+    
+    private void aplicarEstilos() {
+    Util.EstiloUI.aplicarVentana(this);
+    Util.EstiloUI.aplicarPantallaCompleta(this);
+    EstiloUI.aplicarMargenResponsivo((JPanel) this.getContentPane());
+    Util.EstiloUI.aplicarBotonPrimario(btnEditar);
+    Util.EstiloUI.aplicarBotonPrimario(btnReportar);
+    Util.EstiloUI.aplicarBotonPeligro(btnVolver);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,25 +85,19 @@ public class VistaAverias extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnVolver = new javax.swing.JButton();
         btnReportar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnReportar.setText("Reportar Avería");
+        btnVolver.setText("Volver");
+
+        btnReportar.setText("ReportarAveria");
 
         btnEditar.setText("Editar");
-
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,7 +107,7 @@ public class VistaAverias extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Máquina", "Tipo", "Operario", "Técnico", "F. Inicio", "F. Asignación", "F. Aceptación", "F. Finalización"
+                "ID", "Máquina", "Tipo", "Operario", "Técnico", "F. Inicio", "F. Asignación", "F. Aceptación", "F- Finalización"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -96,97 +120,56 @@ public class VistaAverias extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("Gestión de Averías");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(130, 130, 130))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnVolver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditar)
-                        .addGap(20, 20, 20)
+                        .addGap(18, 18, 18)
                         .addComponent(btnReportar)))
-                .addContainerGap())
+                .addGap(17, 17, 17))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditar)
-                .addGap(18, 18, 18)
-                .addComponent(btnReportar)
-                .addGap(22, 22, 22))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(223, 223, 223))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVolver)
-                    .addComponent(btnEditar)
-                    .addComponent(btnReportar))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnReportar)
+                            .addComponent(btnEditar))
+                        .addGap(15, 15, 15))
+                    .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,116 +187,38 @@ public class VistaAverias extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VistaAverias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VistaAverias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VistaAverias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VistaAverias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VistaAverias().setVisible(true));
-    }
-    
-    public JButton getActualizar(){
-    return btnEditar;
-}
-    
-    public JButton getReportar(){
-        return btnReportar;
-    }
-    public JButton getVolver(){
-        return btnVolver;
-    }
-    
-  public int getIdSeleccionado(){
-    int fila = jTable1.getSelectedRow();
-    if(fila == -1) return -1;
-    return (int) jTable1.getValueAt(fila, 0);
-}
-    
-  private void aplicarEstilos() {
-    Util.EstiloUI.aplicarVentana(this);
-    Util.EstiloUI.aplicarPantallaCompleta(this);
-    EstiloUI.aplicarMargenResponsivo((JPanel) this.getContentPane());
-
-    Util.EstiloUI.aplicarBotonPrimario(btnEditar);
-    Util.EstiloUI.aplicarBotonPrimario(btnReportar);
-    Util.EstiloUI.aplicarBotonPeligro(btnVolver);
-}
-  
-  public void llenarTabla(java.util.List<modelo.Averia> lista) {
-    javax.swing.table.DefaultTableModel modelo = 
-        (javax.swing.table.DefaultTableModel) jTable1.getModel();
-
-    modelo.setRowCount(0); // limpiar tabla
-
-    for (modelo.Averia a : lista) {
-        modelo.addRow(new Object[]{
-            a.getCodigoAveria(),
-            a.getMaquinariaFK(),
-            a.getTipoAveriaFK(),
-            a.getUsuarioReportaFK(),
-            a.getUsuarioTecnicoFK() > 0 ? a.getUsuarioTecnicoFK() : "Sin asignar",
-            a.getFechaInicioAver() != null ? a.getFechaInicioAver() : "-",
-            a.getFechaAsigTecnico() != null ? a.getFechaAsigTecnico() : "-",
-            a.getFechaAcepTecnico() != null ? a.getFechaAcepTecnico() : "-",
-            a.getFechaFinalizTecnico() != null ? a.getFechaFinalizTecnico() : "-"
-            
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VistaAverias().setVisible(true);
+            }
         });
-        javax.swing.table.DefaultTableModel modelo =
-            (javax.swing.table.DefaultTableModel) jTable1.getModel();
-
-        modelo.setRowCount(0);
-
-        for (modelo.Averia a : lista) {
-            modelo.addRow(new Object[]{
-                a.getCodigoAveria(),
-                a.getMaquinariaFK(),
-                a.getDescInicAveria(),
-                a.getTipoAveriaFK(),
-                a.getUsuarioReportaFK(),
-                (a.getUsuarioTecnicoFK() != null && a.getUsuarioTecnicoFK() > 0)
-                    ? a.getUsuarioTecnicoFK()
-                    : "Sin asignar",
-                a.getFechaInicioAver(),
-                a.getFechaAsigTecnico(),
-                a.getFechaAcepTecnico(),
-                a.getFechaFinalizTecnico()
-            });
-        }
-        ajustarColumnasTabla();
-    }
-  
-    private void ajustarColumnasTabla() {
-          javax.swing.table.TableColumnModel columnas = jTable1.getColumnModel();
-
-          columnas.getColumn(0).setPreferredWidth(70);   // ID
-          columnas.getColumn(1).setPreferredWidth(170);  // Máquina
-          columnas.getColumn(2).setPreferredWidth(220);  // Descripción
-          columnas.getColumn(3).setPreferredWidth(220);   // Tipo
-          columnas.getColumn(4).setPreferredWidth(220);  // Operario
-          columnas.getColumn(5).setPreferredWidth(170);  // Técnico
-          columnas.getColumn(6).setPreferredWidth(220);  // Fecha Inicio
-          columnas.getColumn(7).setPreferredWidth(240);  // Fecha Asignación
-          columnas.getColumn(8).setPreferredWidth(250);  // Fecha Aceptación
-          columnas.getColumn(9).setPreferredWidth(250);  // Fecha Finalización // Fecha Finalización
     }
 
-    public void mostrarMensaje(String mensaje) {
-        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    // Método para mostrar un mensaje error
-    public void mostrarError(String mensaje) {
-        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnReportar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    public void mostrarError(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
