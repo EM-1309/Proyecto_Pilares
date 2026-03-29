@@ -4,6 +4,9 @@
  */
 package vista;
 
+import javax.swing.JButton;
+import javax.swing.JTable;
+
 /**
  *
  * @author konatasht
@@ -17,6 +20,19 @@ public class VistaTipoEstados extends javax.swing.JFrame {
      */
     public VistaTipoEstados() {
         initComponents();
+        setTitle("Estados");
+        
+        tablaEstados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Estado", "Descripción"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }   
+        });
     }
 
     /**
@@ -29,16 +45,17 @@ public class VistaTipoEstados extends javax.swing.JFrame {
     private void initComponents() {
 
         btnVolver = new javax.swing.JButton();
-        btnCrear = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaEstados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnVolver.setText("Volver");
 
-        btnCrear.setText("Crear");
+        btnAgregar.setText("Agregar");
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -47,49 +64,63 @@ public class VistaTipoEstados extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Tipo:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operativa", "En reparación", "Averiada", "Fuera de servicio", "En mantenimiento", "Pendiente revisión", "Reparación asignada", "Reparación aceptada", "Reparación finalizada", "Dada de baja", "Operativa", "En Reparación", "Fuera de Servicio", "Baja Definitivo" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+        tablaEstados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(tablaEstados);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btnVolver))
+                        .addComponent(btnVolver)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnEliminar)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCrear)))))
-                .addContainerGap(106, Short.MAX_VALUE))
+                                .addComponent(btnAgregar)))
+                        .addGap(36, 36, 36))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
-                    .addComponent(btnCrear))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                    .addComponent(btnAgregar))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(20, 20, 20))
         );
@@ -100,10 +131,6 @@ public class VistaTipoEstados extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,12 +156,51 @@ public class VistaTipoEstados extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaTipoEstados().setVisible(true));
     }
+    
+    public JButton getAgregar(){
+        return btnAgregar;
+    }
+    public JButton getEliminar(){
+        return btnEliminar;
+    }
+    public JButton getVolver(){
+        return btnVolver;
+    }
+    public JTable getTablaEstados(){
+        return tablaEstados;
+    }
+    
+    // Método para mostrar mensaje éxitoso
+    public void mostrarMensaje(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para mostrar un mensaje error
+    public void mostrarError(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // Método para llenar la tabla
+    public void llenarTabla(java.util.List<modelo.Estado> lista){
+        javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel) tablaEstados.getModel();
+
+        modelo.setRowCount(0);
+        
+        for(modelo.Estado e : lista){
+            modelo.addRow(new Object[]{
+                e.getCodigoEstado(),
+                e.getDescripcionEstado()
+            });
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaEstados;
     // End of variables declaration//GEN-END:variables
 }

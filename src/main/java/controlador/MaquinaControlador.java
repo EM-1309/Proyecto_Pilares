@@ -28,6 +28,9 @@ public class MaquinaControlador {
         this.mV.setBtnAgregarListener(e -> abrirAgregar());
         this.mV.setBtnEliminarListener(e -> eliminar());
         this.mV.setBtnVolverListener(e -> volverAdmin());
+        this.mV.setBtnMaquinaria(e -> abrirTipoMaquina());
+        this.mV.setBtnEstados(e -> abrirTipoEstados());
+        this.mV.setBtnEditarListener(e -> abrirEditarMaquina());
     }
 
     private void cargarTabla(){
@@ -39,6 +42,29 @@ public class MaquinaControlador {
         new AgregarMaquina(vistaA, usuarioActual);
         mV.dispose();
         vistaA.setVisible(true);
+    }
+    
+    private void abrirTipoMaquina(){
+        VistaTipoMaquina vistaT = new VistaTipoMaquina();
+        VistaAgregarTipo vistaA = new VistaAgregarTipo();
+        new TipoMaquinaControlador(vistaT, vistaA, usuarioActual);
+        mV.dispose();
+        vistaT.setVisible(true);
+    }
+    
+    private void abrirTipoEstados(){
+        VistaTipoEstados vistaE = new VistaTipoEstados();
+        VistaAgregar vistaA = new VistaAgregar();
+        new EstadoControlador(vistaE, vistaA);
+        mV.dispose();
+        vistaE.setVisible(true);
+    }
+    
+    private void abrirEditarMaquina(){
+        VistaEditar vistaEd = new VistaEditar();
+        new EditarMaquina(vistaEd, usuarioActual);
+        mV.dispose();
+        vistaEd.setVisible(true);
     }
 
     private void eliminar(){

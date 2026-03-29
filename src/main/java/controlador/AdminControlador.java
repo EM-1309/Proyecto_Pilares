@@ -21,7 +21,12 @@ public class AdminControlador {
         this.averiaD = new AveriaDAOImpl();
         this.maquinariaD = new MaquinariaDAOImpl();
         this.usuarioActual = usuarioActual;
+        
+        if(usuarioActual != null){
+        this.vistaAd.setNombreUsuario(usuarioActual.getNombre());
+    }
 
+        this.vistaAd.setNombreUsuario(usuarioActual.getNombre());
         this.vistaAd.esMenuUsuarios(e -> abrirUsuarios());
         this.vistaAd.esMenuAverias(e -> abrirAverias());
         this.vistaAd.esMenuMaquinas(e -> abrirMaquinas());
@@ -38,7 +43,7 @@ public class AdminControlador {
     }
 
     private void abrirAverias(){
-        AveriasView averiaV = new AveriasView();
+        VistaAverias averiaV = new VistaAverias();
         new AveriaControlador(averiaV, usuarioActual);
         averiaV.setVisible(true);
         vistaAd.dispose();
@@ -53,6 +58,7 @@ public class AdminControlador {
 
     private void abrirPerfil(){
         VistaPerfil perfilV = new VistaPerfil();
+        new PerfilControlador(perfilV, usuarioActual);
         perfilV.setVisible(true);
         vistaAd.dispose();
     }

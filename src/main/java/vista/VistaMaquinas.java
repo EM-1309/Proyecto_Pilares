@@ -41,39 +41,41 @@ public class VistaMaquinas extends javax.swing.JFrame {
 
         panelBotones.add(btnAgregar);
         panelBotones.add(btnEditar);
-        panelBotones.add(btnEliminar);
         panelBotones.add(btnRefrescarLista);
         panelBotones.add(btnMaquinaria);
         panelBotones.add(btnEstados);
+        panelBotones.add(btnEliminar);
         
         add(panelBotones, java.awt.BorderLayout.WEST);
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
         add(btnVolver, java.awt.BorderLayout.SOUTH);
         revalidate();
         repaint();
-           jTable1.setModel(new javax.swing.table.DefaultTableModel(
-    new Object [][] {},
-    new String [] {
-        "Nombre", "Cód. Maq", "Estado", "Descripción"
-    }
-) {
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
-    }
-});
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Nombre", "Cód. Maq", "Estado", "Descripción"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }   
+        });
         
         TableRowSorter<DefaultTableModel> sorter = 
         new TableRowSorter<>((DefaultTableModel) jTable1.getModel());
 
         jTable1.setRowSorter(sorter);
         sorter.setComparator(1, new java.util.Comparator<Integer>() {
+            @Override
             public int compare(Integer a, Integer b) {
                 return a.compareTo(b);
             }
         });
 
         sorter.setComparator(2, new java.util.Comparator<Integer>() {
+            @Override
             public int compare(Integer a, Integer b) {
                 return a.compareTo(b);
             }
@@ -269,7 +271,6 @@ public class VistaMaquinas extends javax.swing.JFrame {
 
     java.awt.EventQueue.invokeLater(() -> {
         VistaMaquinas vista = new VistaMaquinas();
-        MaquinariaDAO dao = new MaquinariaDAOImpl();
         Usuario usuarioActual = new Usuario();
         
         new MaquinaControlador(vista, usuarioActual);
@@ -298,6 +299,14 @@ public class VistaMaquinas extends javax.swing.JFrame {
     
     public void setBtnVolverListener(java.awt.event.ActionListener listener) {
         btnVolver.addActionListener(listener);
+    }
+    
+    public void setBtnEstados(java.awt.event.ActionListener listener){
+        btnEstados.addActionListener(listener);
+    }
+    
+    public void setBtnMaquinaria(java.awt.event.ActionListener listener){
+        btnMaquinaria.addActionListener(listener);
     }
     
     // Método para obtener columna seleccionada

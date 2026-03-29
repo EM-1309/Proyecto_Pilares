@@ -3,6 +3,7 @@ package controlador;
 import dao.*;
 import dao.impl.AveriaDAOImpl;
 import dao.impl.MaquinariaDAOImpl;
+import dao.impl.TipoMaquinaDAOImpl;
 import dao.impl.UsuarioDAOImpl;
 import modelo.Maquinaria;
 import modelo.Usuario;
@@ -11,54 +12,90 @@ import vista.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.List;
+import modelo.TipoMaquinaria;
 
 public class AgregarMaquina {
 
     private VistaAgregarMaquina vista;
     private MaquinariaDAO dao;
-    private UsuarioDAO uD;
-    private AveriaDAO aD;
+    private TipoMaquinaDAO tipoDao;
     private Usuario usuarioActual;
 
     public AgregarMaquina(VistaAgregarMaquina vistaAgregar, Usuario usuarioActual) {
         this.vista = vistaAgregar;
         this.dao = new MaquinariaDAOImpl();
-        this.uD = new UsuarioDAOImpl();
-        this.aD = new AveriaDAOImpl();
+        this.tipoDao = new TipoMaquinaDAOImpl();
         this.usuarioActual = usuarioActual;
+        
+        cargarTiposMaquina();
 
         vista.getBtnCrear().addActionListener(new CrearListener());
         vista.getBtnVolver().addActionListener(new VolverListener());
+        
+        vista.setCodigoAutomatico();
     }
 
     class CrearListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                String nombre = vista.getTxtNombre();
-                String codigoTexto = vista.getTxtCodigo();
+                String nombre = vista.getTxtNombre().trim();
+                String descripcion = vista.getTxtDescripcion().trim();
                 String tipoTexto = vista.getTipoMaquina();
 
-                if (nombre.isEmpty() || codigoTexto.isEmpty()) {
-                    vista.mostrarError("Debe completar los campos obligatorios");
-                    return;
-                }
+                if (nombre.isBlank()) {
+                vista.mostrarError("Debe introducir el nombre de la máquina.");
+                return;
+            }
+            if (nombre.length() < 3) {
+                vista.mostrarError("El nombre debe tener al menos 3 caracteres.");
+                return;
+            }
+            if (nombre.length() > 100) {
+                vista.mostrarError("El nombre es demasiado largo.");
+                return;
+            }
+            if (!nombre.matches("[\\p{L}0-9 .\\-_/]+")) {
+                vista.mostrarError("El nombre contiene caracteres no válidos.");
+                return;
+            }
+            if (tipoTexto == null || tipoTexto.isBlank()) {
+                vista.mostrarError("Debe seleccionar un tipo de máquina.");
+                return;
+            }
+            if (descripcion.isBlank()) {
+                vista.mostrarError("Debe introducir una descripción.");
+                return;
+            }
+            if (descripcion.length() < 5) {
+                vista.mostrarError("La descripción es demasiado corta.");
+                return;
+            }
+            if (descripcion.length() > 255) {
+                vista.mostrarError("La descripción es demasiado larga.");
+                return;
+            }
 
-                int tipoMaquina = convertirTipo(tipoTexto);
+            int tipoMaquinaId = vista.getTipoMaquinaSeleccionadoId();
 
-                Maquinaria m = new Maquinaria();
-                m.setNombre(nombre);
-                m.setCodigoEstadoFK(1);
-                m.setTipoMaquinariaFK(tipoMaquina);
-                m.setFechaAlta(new Date(System.currentTimeMillis()));
+            if (tipoMaquinaId == -1) {
+                vista.mostrarError("Debe seleccionar un tipo de máquina válido.");
+                return;
+            }
 
-                dao.insertar(m);
+            Maquinaria m = new Maquinaria();
+            m.setNombre(nombre);
+            m.setCodigoEstadoFK(1);
+            m.setTipoMaquinariaFK(tipoMaquinaId);
+            m.setFechaAlta(new Date(System.currentTimeMillis()));
 
-                vista.mostrarMensaje("Máquina creada correctamente");
+            dao.insertar(m);
 
-                abrirVistaMaquinas();
+            vista.mostrarMensaje("Máquina creada correctamente.");
+            abrirVistaMaquinas();
 
-            } catch (Exception ex) {
+            }catch (Exception ex) {
                 vista.mostrarError("Error al crear la máquina");
                 ex.printStackTrace();
             }
@@ -90,5 +127,10 @@ public class AgregarMaquina {
             case "Compresor Industrial": return 4;
             default: return 1;
         }
+    }
+    
+    private void cargarTiposMaquina() {
+        List<TipoMaquinaria> tipos = tipoDao.listar();
+        vista.cargarTiposMaquina(tipos);
     }
 }
