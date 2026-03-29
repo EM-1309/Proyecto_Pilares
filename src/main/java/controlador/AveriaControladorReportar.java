@@ -1,31 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package controlador;
-
-import modelo.Usuario;
-import vista.ReportarAveriaView;
-
-
-/**
- *
- * @author konatasht
- */
-public class AveriaControladorReportar {
-    private ReportarAveriaView rA;
-    private Usuario usuarioActual;
-    
-    public AveriaControladorReportar(ReportarAveriaView rA, Usuario usuarioActual){
-        this.rA = rA;
-        this.usuarioActual = usuarioActual;
-    }
-    
-}
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
 import dao.AveriaDAO;
@@ -43,11 +15,8 @@ import modelo.Usuario;
 import vista.ReportarAveriaView;
 import vista.VistaAdmin;
 
-/**
- *
- * @author konatasht
- */
 public class AveriaControladorReportar {
+
     private final ReportarAveriaView vista;
     private final Usuario usuarioActual;
     private final AveriaDAO averiaDAO;
@@ -67,23 +36,21 @@ public class AveriaControladorReportar {
         this.vista.setVisible(true);
     }
 
+    // ================= CARGA INICIAL =================
     private void cargarDatosIniciales() {
-         List<Maquinaria> maquinas = maquinariaDAO.listar();
+        List<Maquinaria> maquinas = maquinariaDAO.listar();
 
         TipoAveria t1 = new TipoAveria();
         t1.setCodigoTipoAveria(1);
         t1.setDescripcionTipoAv("Mecánica");
-        t1.setTiempoPromRepar(0);
 
         TipoAveria t2 = new TipoAveria();
         t2.setCodigoTipoAveria(2);
         t2.setDescripcionTipoAv("Eléctrica");
-        t2.setTiempoPromRepar(0);
 
         TipoAveria t3 = new TipoAveria();
         t3.setCodigoTipoAveria(3);
         t3.setDescripcionTipoAv("Hidráulica");
-        t3.setTiempoPromRepar(0);
 
         List<TipoAveria> tipos = java.util.Arrays.asList(t1, t2, t3);
 
@@ -91,29 +58,35 @@ public class AveriaControladorReportar {
         vista.cargarTiposAveria(tipos);
     }
 
+    // ================= BOTÓN ACEPTAR =================
     private class ReportarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                String descripcion = vista.getDescInic();
+                // 🔴 VALIDACIÓN
+                if (!vista.datosValidos()) return;
 
-                if (descripcion == null || descripcion.isBlank()) {
-                    vista.mostrarError("Debes introducir una descripción de la avería.");
-                    return;
-                }
+                String descripcion = vista.getDescInic();
 
                 Averia a = new Averia();
                 a.setDescInicAveria(descripcion);
                 a.setFechaInicioAver(new Timestamp(System.currentTimeMillis()));
-                a.setFechaAsigTecnico(null);
-                a.setFechaAcepTecnico(null);
-                a.setFechaFinalizTecnico(null);
-                a.setProcRealizadoTecnico(null);
-
                 a.setUsuarioReportaFK(usuarioActual.getCodigoUsuario());
+
+                int maquinaID = vista.getMaquinariaID();
+                int tipoID = vista.getTipoAveriaID();
+
+                // 🔴 SEGURIDAD EXTRA
+                if (maquinaID == -1 || tipoID == -1) {
+                    vista.mostrarError("Debes seleccionar máquina y tipo de avería.");
+                    return;
+                }
+
+                a.setMaquinariaFK(maquinaID);
+                a.setTipoAveriaFK(tipoID);
+
+                // 🔥 CLAVE → evitar crash
                 a.setUsuarioTecnicoFK(null);
-                a.setMaquinariaFK(vista.getMaquinariaID());
-                a.setTipoAveriaFK(vista.getTipoAveriaID());
 
                 averiaDAO.insertar(a);
 
@@ -121,11 +94,14 @@ public class AveriaControladorReportar {
                 vista.limpiarFormulario();
 
             } catch (Exception ex) {
-                vista.mostrarError("Error al reportar la avería: " + ex.getMessage());
+                ex.printStackTrace(); // 👈 MUY IMPORTANTE para debug
+                 ex.printStackTrace();
+                vista.mostrarError("Error: " + ex.getMessage());
             }
         }
     }
 
+    // ================= BOTÓN VOLVER =================
     private class VolverListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
